@@ -1,23 +1,14 @@
 <?php
-
-require_once('db_config.php');
-require_once('display_page.inc.php');
-
-if (isset($_POST['Logout']))
-{
-	if (session_status() == PHP_SESSION_ACTIVE)
+	session_start();
+	if (isset($_POST['Logout']))
 	{
-		session_destroy();
-		session_abort();
+		if (session_status() == PHP_SESSION_ACTIVE)
+		{
+			session_unset();
+			session_destroy();
+		}
+		unset($_POST['Logout']);
 	}
-	unset($_POST['Logout']);
-}
-
-if (isset($_POST["username"]) && isset($_POST["password"]))
-{
-	attemptLogin();
-}
-
 
 ?>
 <!DOCTYPE html>
@@ -25,7 +16,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 11</title>
+    <title>Music Mentors</title>
 
     <!-- Bootstrap core CSS  -->
     <link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
@@ -40,7 +31,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
       <div class="col-md-6">
          <div id="login">
             <div class="page-header">
-               <h2>Login</h2>
+               <h2>Welcome</h2>
             </div>
             <?php
             	if (isset($_SESSION['username']))
@@ -52,10 +43,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]))
 				}
 				else
 				{
-					if (!isset($_GET['page']) || $_GET['page'] == "login")
-						outputLoginForm();
-					else if ($_GET['page'] == "register")
-						outputRegisterForm();
+					header("Location:	login.php");
 				}
             ?>
          </div>
