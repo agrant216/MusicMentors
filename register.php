@@ -10,6 +10,13 @@
 
 	<!-- Bootstrap core CSS  -->
 	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
+
+	<!-- JavaScript  -->
+	<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
+	<script type="text/javascript" src="assets/js/js-validation.js"></script>
+
 </head>
 <body>
 	<div class="container">
@@ -42,12 +49,12 @@
 										header("Location:	?result=failure");
 								}
 							}
-							echo '<form role="form" method="post">';
+							echo '<form id="registration" role="form" method="post">';
 							if (!empty($_POST) && (!isset($_POST['username']) || empty($_POST['username'])))
 							{
 								echo '<div class="form-group has-error">';
 								echo '<label for="username">Username</label>';
-								echo '<input type="text" class="form-control" name="username">';
+								echo '<input type="text" class="form-control" name="username" pattern="^[a-z0-9_-]{6,18}$" required="required">';
 								echo '<p class="help-block">Enter a username</p>';
 								echo '</div>';
 							}
@@ -55,7 +62,7 @@
 							{
 								echo '<div class="form-group has-error">';
 								echo '<label for="username">Username</label>';
-								echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'">';
+								echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-z0-9_-]{6,18}$" required="required">';
 								echo '<p class="help-block">Username already exists</p>';
 								echo '</div>';
 							}
@@ -65,47 +72,39 @@
 								echo '<div class="form-group">';
 								echo '<label for="username">Username</label>';
 								if (isset($_POST['username']))
-									echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'">';
+									echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-z0-9_-]{6,18}$" required="required">';
 								else
-									echo '<input type="text" class="form-control" name="username">';
+									echo '<input type="text" class="form-control" name="username" pattern="^[a-z0-9_-]{6,18}$" required="required">';
 								echo '</div>';
 							}
 							if (!empty($_POST) && (!isset($_POST["password"]) || empty($_POST['password'])))
 							{
 								echo '<div class="form-group has-error">';
-								echo '<label for="password">Password</label>';
-								echo '<input type="password" class="form-control" name="password">';
+								echo '<label for="password_confirmation">Password</label>';
+								echo '<input type="password" class="form-control" name="password" data-validation="length" data-validation-length="min8">';
 								echo '<p class="help-block">Enter a password</p>';
 								echo '</div>';
 							}
 							else
 							{
 								echo '<div class="form-group">';
-								echo '<label for="password">Password</label>';
-								echo '<input type="password" class="form-control" name="password">';
+								echo '<label for="password_confirmation">Password</label>';
+								echo '<input type="password" class="form-control" name="password" data-validation="length" data-validation-length="min8">';
 								echo '</div>';
 							}
 							if (!empty($_POST) && (!isset($_POST["confirm_password"]) || empty($_POST["confirm_password"])))
 							{
 								echo '<div class="form-group has-error">';
-								echo '<label for="confirm_password">Confirm Password</label>';
-								echo '<input type="password" class="form-control" name="confirm_password">';
+								echo '<label for="password">Confirm Password</label>';
+								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-confirm="password">';
 								echo '<p class="help-block">Confirm your password</p>';
-								echo '</div>';
-							}
-							else if (!empty($_POST) && isset($_POST["confirm_password"]) && $_POST['password'] != $_POST['confirm_password'])
-							{
-								echo '<div class="form-group has-error">';
-								echo '<label for="confirm_password">Confirm Password</label>';
-								echo '<input type="password" class="form-control" name="confirm_password">';
-								echo'<p class="help-block">Passwords do not match</p>';
 								echo '</div>';
 							}
 							else
 							{
 								echo '<div class="form-group">';
 								echo '<label for="password">Confirm Password</label>';
-								echo '<input type="password" class="form-control" name="confirm_password">';
+								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-confirm="password">';
 								echo '</div>';
 							}
 							if (!empty($_POST) && (!isset($_POST['email']) || empty($_POST['email'])))
@@ -126,8 +125,8 @@
 								echo '<input type="text" class="form-control" name="email">';
 								echo '</div>';
 							}
-							echo '<input type="radio" name="user_type" value="student" checked>&nbsp;Student</input> <br />';
-							echo '<input type="radio" name="user_type" value="mentor">&nbsp;Mentor</input> <br /><br />';
+							echo '<input type="radio" name="user_type" value="student" data-toggle="tooltip" title="You will sign up seeking music teachers" checked>&nbsp;Student</input> <br />';
+							echo '<input type="radio" name="user_type" value="mentor" data-toggle="tooltip" title="You will sign up seeking interested students">&nbsp;Mentor</input> <br /><br />';
 							echo '<button type="submit" class="btn btn-primary">Register</button>';
 							echo '</form>';
 						}

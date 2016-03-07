@@ -35,16 +35,16 @@
             </div>
             <?php
             	if (isset($_SESSION['username']))
-				{
-					echo "<h1>Hello, ".$_SESSION['username']."</h1>";
-					echo '<form role="form" method="post">
-					<button name="Logout" class="btn btn-primary">Logout</button>
-					</form>';
-				}
-				else
-				{
-					header("Location:	login.php");
-				}
+      				{
+      					echo "<h1>Hello, ".$_SESSION['username']."</h1>";
+      					echo '<form role="form" method="post">
+      					<button name="Logout" class="btn btn-primary">Logout</button>
+      					</form>';
+      				}
+      				else
+      				{
+      					header("Location:	login.php");
+      				}
             ?>
          </div>
       </div>
