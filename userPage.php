@@ -27,7 +27,7 @@
 	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
     <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
-	<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>
 <body>
@@ -91,8 +91,8 @@
 			<li class="float-right">Copyright 2016</li>
 		</ul>
 	</div>
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+	<script src="assets/js/vendor/jquery.js"></script>
+	<script src="assets/js/vendor/foundation.js"></script>
 	<script>
 		$(document).foundation();
 	</script>

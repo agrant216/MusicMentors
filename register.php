@@ -150,9 +150,9 @@
        	</div>
     </div>  <!-- end container -->
     <!-- JavaScript  -->
-	<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
+	<script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
 	<script type="text/javascript" src="assets/js/js-validation.js"></script>
 </body>
 </html>

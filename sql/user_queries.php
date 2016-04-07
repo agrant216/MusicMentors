@@ -199,5 +199,68 @@
 			die( $e->getMessage() );
 		}
 	}
+	function getUserId($user){
+		try
+			{
+				
+				$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				//Prepare a statement by setting parameters
+				$sql = 'SELECT id FROM mm_users WHERE username=:user';
+				$statement = $pdo->prepare($sql);
+				$statement->bindValue(':user', $user);
+				$statement->execute();
 
+				
+				$result = $statement->fetch();
+				$userId = $result["id"];
+				
+				$pdo = null;
+				return $userId;
+			}
+
+			catch (PDOException $e) {
+				die( $e->getMessage() );
+			}
+
+	}
+	function updateInfo($user, $input, $mode){
+		switch ($mode) {
+			case 'username':
+				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
+				break;
+			case 'password':
+				$sql = 'UPDATE mm_users SET password=:input WHERE id=:id';
+				break;
+			case 'email':
+				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
+				break;
+
+			default:
+				break;
+		}
+		try
+			{
+				$id = getUserId($user);
+				$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				//Prepare a statement by setting parameters
+
+				$statement = $pdo->prepare($sql);
+				$statement->bindValue(':input', $input);
+				$statement->bindValue(':id', $user);
+				$statement->execute();
+				
+				$pdo = null;
+				if($mode=='username'){
+					header("Location: logout.php");
+				}
+				return true;
+			}
+
+			catch (PDOException $e) {
+				die( $e->getMessage() );
+				return false;
+			}
+	}
 ?>

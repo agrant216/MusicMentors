@@ -49,7 +49,10 @@
 			<ul class="breadcrumbs">
 				<li><a href="index.php">Home</a></li>
 				<li>
-					<span class="show-for-sr">Current: </span> <?php if (isset($_SESSION["username"])) echo $_SESSION["username"]; ?>
+					<a href="userPage.php?user=<?php echo $username?>"><?php if (isset($_SESSION["username"])) echo $_SESSION["username"]; ?></a>
+				</li>
+				<li>
+					<span class="show-for-sr">Current: </span>Edit Profile
 				</li>
 			</ul>
 		</nav>
@@ -97,7 +100,7 @@
 	</div>
 	<script src="assets/js/edit_profile.js">
 
-	<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+	<script src="assets/js/vendor/foundation.js"></script>
 	<script>
 		$(document).foundation();
 	</script>
