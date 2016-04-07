@@ -233,7 +233,7 @@
 				$sql = 'UPDATE mm_users SET password=:input WHERE id=:id';
 				break;
 			case 'email':
-				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
+				$sql = 'UPDATE mm_users SET email=:input WHERE id=:id';
 				break;
 
 			default:
