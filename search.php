@@ -1,5 +1,6 @@
 <?php
 	require_once("sql/queries.php");
+	session_start();
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 		$users = searchMentor("%".$_POST["search_option_name"]."%", $_POST["search_option_genre"], $_POST["search_option_instrument"]);
@@ -55,12 +56,14 @@
     	  <script src="../../assets/js/html5shiv.js"></script>
     	  <script src="../../assets/js/respond.min.js"></script>
     	<![endif]-->
+    	<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+	<link rel="stylesheet" href="assets/css/userprofile.css">
     </head>
 
 	<body>
+	<?php include("includes/mm_header.inc.php"); ?>
   		<div class="container">
     		<div class="row">
-    			<?php include("includes/mm_header.inc.php"); ?>
       			<div class="col-md-12">
 					<div class="panel panel-default">
                 		<div class="panel-heading"><h4>Mentor Search</h4></div>
@@ -105,5 +108,10 @@
 				</div>	<!-- End of col-md-10 -->
 			</div> <!-- End of row -->
 		</div> <!-- End of Container -->
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+	<script>
+			$(document).foundation();
+	</script>
 	</body>
 </html>
