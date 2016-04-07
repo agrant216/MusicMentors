@@ -12,8 +12,6 @@
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		print_r($_POST);
-		print_r($_FILES);
 		if ($_FILES["imageFile"]["error"] == 0)
 			submitChanges($_SESSION["user_id"], $_POST["biography"], $_POST["instrument"], $_POST["genre"], $_FILES["imageFile"]);
 		else
@@ -37,7 +35,6 @@
     <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
 	<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 </head>
 <body>
 	<?php include("includes/mm_header.inc.php"); ?>
@@ -95,9 +92,9 @@
 			<li class="float-right">Copyright 2016</li>
 		</ul>
 	</div>
-	<script src="assets/js/edit_profile.js">
-
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+		<script src="assets/js/edit_profile.js"></script>
 	<script>
 		$(document).foundation();
 	</script>
