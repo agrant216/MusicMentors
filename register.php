@@ -118,7 +118,7 @@
 								echo '<div class="form-group">';
 								echo '<label for="email">E-mail</label>';
 								if (isset($_POST['email']))
-								echo '<input type="text" class="form-control" name="email" value="'.$_POST['email'].'">';
+								echo '<input type="text" class="form-control" name="email" value="'.$_POST['email'].'" data-validation="email">';
 								else
 								echo '<input type="text" class="form-control" name="email" data-validation="email">';
 								echo '</div>';

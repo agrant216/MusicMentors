@@ -33,7 +33,7 @@
 						{
 							echo '<div class="form-group has-error">';
 							echo '<label for="username">Username</label>';
-							echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters">';
+							echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 							echo '<p class="help-block">Enter a username</p>';
 							echo '</div>';
 						}
@@ -42,9 +42,9 @@
 							echo '<div class="form-group">';
 							echo '<label for="username">Username</label>';
 							if (isset($_POST['username']))
-								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" value="'.$_POST['username'].'">';
+								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" value="'.$_POST['username'].'" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 							else
-								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters">';
+								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 							echo '</div>';
 						}
 						if ($_SERVER["REQUEST_METHOD"] == "POST" && empty($_POST["password"]))
