@@ -81,16 +81,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row column">
-		<hr>
-		<ul class="menu">
-			<li>Music Mentors</li>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">[#]</a></li>
-			<li><a href="#">[#]</a></li>
-			<li class="float-right">Copyright 2016</li>
-		</ul>
-	</div>
+<?php include("includes/mm_footer.inc.php"); ?>
 	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="assets/js/vendor/foundation.js"></script>
 	<script>

@@ -1,6 +1,5 @@
 $.validate({
-  form : '#registration',
-  form : '#login',
+  form : '.changeInfo',
   modules:'html5, security'
 });
 

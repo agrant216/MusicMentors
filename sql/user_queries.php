@@ -199,10 +199,11 @@
 			die( $e->getMessage() );
 		}
 	}
+
 	function getUserId($user){
 		try
 			{
-				
+
 				$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				//Prepare a statement by setting parameters
@@ -211,10 +212,10 @@
 				$statement->bindValue(':user', $user);
 				$statement->execute();
 
-				
+
 				$result = $statement->fetch();
 				$userId = $result["id"];
-				
+
 				$pdo = null;
 				return $userId;
 			}
@@ -225,6 +226,8 @@
 
 	}
 	function updateInfo($user, $input, $mode){
+		if ($mode == "username" && userExists($input))
+			return "That username is already taken.";
 		switch ($mode) {
 			case 'username':
 				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
@@ -250,17 +253,17 @@
 				$statement->bindValue(':input', $input);
 				$statement->bindValue(':id', $user);
 				$statement->execute();
-				
+
 				$pdo = null;
 				if($mode=='username'){
 					header("Location: logout.php");
 				}
-				return true;
+				return "Details successfully updated!";
 			}
 
 			catch (PDOException $e) {
 				die( $e->getMessage() );
-				return false;
+				return "An error occurred, please try again later.";
 			}
 	}
 ?>

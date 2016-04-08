@@ -1,5 +1,8 @@
 <?php
 	require_once("sql/queries.php");
+	session_start();
+	if (isset($_SESSION["user_id"]))
+		header("Location: index.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,11 +13,7 @@
 
 	<!-- Bootstrap core CSS  -->
 	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
-
-    <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/theme-default.min.css"
-    rel="stylesheet" type="text/css" />
-
-
+	<link rel="stylesheet" href="assets/js/vendor/form-validator/theme-default.min.css">
 </head>
 <body>
 	<div class="container">
@@ -23,7 +22,8 @@
 
 			</div>
 			<div class="col-md-6">
-		 		<div id="login">
+		 		<div id="login"> <!-- Changing the id here breaks the js -->
+		 			<h1>Welcome to <a href="index.php">Music Mentors</a></h1>
 		 			<div class="page-header">
 						<?php
 							if (!isset($_GET['result']))
@@ -41,7 +41,6 @@
 							{
 								if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['confirm_password']) && !empty($_POST['email']) && $_POST['password'] == $_POST['confirm_password'] && !userExists($_POST['username']))
 								{
-									echo "<script type='text/javascript'>alert('POST IS SET');</script>";
 									if (registerUser($_POST['username'], $_POST['password'], $_POST['email'], $_POST['user_type']))
 										header("Location:	?result=success");
 									else
@@ -53,7 +52,7 @@
 							{
 								echo '<div class="form-group has-error">';
 								echo '<label for="username">Username</label>';
-								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters">';
+								echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 								echo '<p class="help-block">Enter a username</p>';
 								echo '</div>';
 							}
@@ -61,8 +60,8 @@
 							{
 								echo '<div class="form-group has-error">';
 								echo '<label for="username">Username</label>';
-								echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, with no special characters">';
-								echo '<p class="help-block">Username already exists</p>';
+								echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, with no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
+								echo '<p class="help-block">Username already taken</p>';
 								echo '</div>';
 							}
 
@@ -71,9 +70,9 @@
 								echo '<div class="form-group">';
 								echo '<label for="username">Username</label>';
 								if (isset($_POST['username']))
-									echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters">';
+									echo '<input type="text" class="form-control" name="username" value="'.$_POST['username'].'" pattern="^[a-z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 								else
-									echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters">';
+									echo '<input type="text" class="form-control" name="username" pattern="^[a-zA-Z0-9_-]{6,18}$" required="required" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">';
 								echo '</div>';
 							}
 							if (!empty($_POST) && (!isset($_POST["password"]) || empty($_POST['password'])))
@@ -95,7 +94,7 @@
 							{
 								echo '<div class="form-group has-error">';
 								echo '<label for="password">Confirm Password</label>';
-								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-confirm="password" data-validation-error-msg="Password does not match original entry">';
+								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-length="min8" data-validation-confirm="password" data-validation-error-msg="Password does not match original entry">';
 								echo '<p class="help-block">Confirm your password</p>';
 								echo '</div>';
 							}
@@ -103,7 +102,7 @@
 							{
 								echo '<div class="form-group">';
 								echo '<label for="password">Confirm Password</label>';
-								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-confirm="password" data-validation-error-msg="Password does not match original entry">';
+								echo '<input type="password" class="form-control" name="confirm_password" data-validation="confirmation" data-validation-length="min8" data-validation-confirm="password" data-validation-error-msg="Password does not match original entry">';
 								echo '</div>';
 							}
 							if (!empty($_POST) && (!isset($_POST['email']) || empty($_POST['email'])))
@@ -150,9 +149,9 @@
        	</div>
     </div>  <!-- end container -->
     <!-- JavaScript  -->
-	<script src="assets/js/vendor/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
+ 	<script src="assets/js/vendor/jquery.js"></script>
+ 	<script src="bootstrap3_defaultTheme/dist/js/bootstrap.min.js"></script>
+ 	<script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
 	<script type="text/javascript" src="assets/js/js-validation.js"></script>
 </body>
 </html>

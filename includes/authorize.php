@@ -1,4 +1,5 @@
 <?php
+	$error="";
 	if (isset($_COOKIE["auth"]))
 	{
 		$sess = checkToken($_COOKIE["auth"]);
@@ -14,6 +15,9 @@
 	else
 	{
 		session_start();
+		if (isset($_SESSION["user_id"]))
+			header("Location: index.php");
+
 		if (isset($_POST["username"]) && isset($_POST["password"]))
 		{
 			$user_id;
@@ -28,6 +32,13 @@
 				}
 				header("Location:	index.php");
 				exit();
+			}
+			else
+			{
+				if (!userExists($_POST['username']))
+					$error = "User doesn't exist.";
+				else
+					$error = "Login failed, please check your username and password.";
 			}
 		}
 	}
