@@ -1,16 +1,6 @@
 <?php
-	require_once("user_queries.php");
-
-	if (isset($_POST["username"]) && isset($_POST["password"]))
-	{
-		if (attemptLogin($_POST["username"], $_POST["password"]))
-		{
-			session_start();
-			$_SESSION["username"] = $_POST["username"];
-			header("Location:	index.php");
-			exit();
-		}
-	}
+	require_once("sql/queries.php");
+	require_once("includes/authorize.php");
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +59,7 @@
 							echo '<input type="password" class="form-control" name="password">';
 							echo '</div>';
 						}
+						echo '<input type="checkbox" name="remember">Remember Me<br>';
 						echo '<button type="submit" class="btn btn-primary">Login</button>';
 						echo '<a href="register.php" class="btn btn-warning">Register</a>';
 						echo '</form>';

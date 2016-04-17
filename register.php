@@ -1,5 +1,5 @@
 <?php
-	require_once("user_queries.php");
+	require_once("sql/queries.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/theme-default.min.css"
     rel="stylesheet" type="text/css" />
-	
+
 
 </head>
 <body>
@@ -41,6 +41,7 @@
 							{
 								if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['confirm_password']) && !empty($_POST['email']) && $_POST['password'] == $_POST['confirm_password'] && !userExists($_POST['username']))
 								{
+									echo "<script type='text/javascript'>alert('POST IS SET');</script>";
 									if (registerUser($_POST['username'], $_POST['password'], $_POST['email'], $_POST['user_type']))
 										header("Location:	?result=success");
 									else
@@ -123,8 +124,8 @@
 								echo '<input type="text" class="form-control" name="email" data-validation="email">';
 								echo '</div>';
 							}
-							echo '<input type="radio" name="user_type" value="student" data-toggle="tooltip" title="You will sign up seeking music teachers" checked>&nbsp;Student</input> <br />';
-							echo '<input type="radio" name="user_type" value="mentor" data-toggle="tooltip" title="You will sign up seeking interested students">&nbsp;Mentor</input> <br /><br />';
+							echo '<input type="radio" name="user_type" value="0" data-toggle="tooltip" title="You will sign up seeking music teachers" checked>&nbsp;Student</input> <br />';
+							echo '<input type="radio" name="user_type" value="1" data-toggle="tooltip" title="You will sign up seeking interested students">&nbsp;Mentor</input> <br /><br />';
 							echo '<button type="submit" class="btn btn-primary">Register</button>';
 							echo '</form>';
 						}
@@ -149,9 +150,9 @@
        	</div>
     </div>  <!-- end container -->
     <!-- JavaScript  -->
-	<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.8/jquery.form-validator.min.js"></script>
+	<script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
 	<script type="text/javascript" src="assets/js/js-validation.js"></script>
 </body>
 </html>
