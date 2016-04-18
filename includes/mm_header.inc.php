@@ -3,12 +3,13 @@
 		<div class="top-bar-left">
 			<ul class="dropdown menu" data-dropdown-menu>
 				<li class="menu-text">Music Mentors</li>
+				<li><a href="index.php">Home</a></li>
 				<li class="has-submenu">
-					<a href="#">Profile</a>
+					<a href="#">My Profile</a>
 					<ul class="submenu menu vertical" data-submenu>
-						<li><a href=<?php if (isset($_SESSION["username"])) echo '"userPage.php?user='.$_SESSION["username"].'"'; else echo '"login.php"'; ?>" >View My Profile</a></li>
+						<li><a href=<?php if (isset($_SESSION["username"])) echo '"userPage.php?user='.$_SESSION["username"].'"'; else echo '"login.php"'; ?> >View My Profile</a></li>
 						<li><a href="userPage-edit.php">Edit My Profile</a></li>
-						<li><a href="edit-info.php?id=<?php echo getUserId($_SESSION["username"]); ?>">Edit My Account Settings</a></li>
+						<li><a href="edit-info.php?id=<?php echo getUserId($_SESSION['username']); ?>">Edit My Account Settings</a></li>
 					</ul>
 				</li>
 				<li> <a href="search.php">Mentor Search</a> </li>

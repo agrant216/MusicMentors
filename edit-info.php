@@ -7,7 +7,7 @@ if (isset($_GET["mode"])) {
 	if (isset($_POST["input"])) {
 		updateInfo($id,$_POST["input"],$_GET["mode"]);
 	}
-	
+
 }
 session_start();
 ?>
@@ -45,7 +45,7 @@ session_start();
 			</div>
 		</div>
 	</div>
-	
+
 	<br>
 		<div class="row columns">
 		<nav aria-label="You are here:" role="navigation">
@@ -66,7 +66,7 @@ session_start();
 		<ul class="tabs" data-tabs id="example-tabs">
 			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Account Information</a></li>
 			<li class="tabs-title"><a href="#panel2">Profile Information</a></li>
-			<li class="tabs-title"><a href="#panel3">Other</a></li>
+			<li class="tabs-title"><a href="#panel3">Advanced</a></li>
 		</ul>
 		<div class="tabs-content" data-tabs-content="example-tabs">
 			<div class="tabs-panel is-active" id="panel1">
