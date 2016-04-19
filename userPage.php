@@ -10,7 +10,17 @@
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		if (isset($_POST["reviewText"]))
+		if (isset($_POST["checkAppointments"]) && !empty($_POST["checkAppointments"]))
+		{
+			foreach($_POST["checkAppointments"] as $a)
+			{
+				if (!in_array($a, $_SESSION["cart"]))
+					$_SESSION["cart"][] = $a;
+			}
+			header("Location: cart.php");
+		}
+
+		if (isset($_POST["reviewText"]) && !empty($_POST["reviewText"]))
 			addReview($user->getID(), $_SESSION["user_id"], $_POST["reviewText"], $_POST["rating"]);
 		else
 			echo "NO REVIEW TEXT";
@@ -63,7 +73,8 @@
 			<?php
 				echo '<p>'.$user->getBiography().'</p>';
 				echo '<h5 class="bg-primary">Email: '.$user->getEmail().'</h5>';
-				displayAppointments($user, 1); //Display only open appointments
+				if (!isset($_SESSION["user_id"]) || $user->getID() != $_SESSION["user_id"])
+					displayAppointments($user, 1); //Display only open appointments
 			?>
 			<div class="small secondary expanded button-group">
 				<a class="button">Facebook</a>
