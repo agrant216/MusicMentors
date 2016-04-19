@@ -1,0 +1,14 @@
+#searchBody{
+  margin: 2%;
+}
+  #searchObjects{
+    padding:2px;
+  }
+    #searchObjects select{
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    #searchObjects .form-control{
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
