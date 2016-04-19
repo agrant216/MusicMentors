@@ -28,8 +28,10 @@
 
 	function myReview($user)
 	{
-		if ($user->getType() == 1)
-		{
+		if ($user->getType() != 1 || (isset($_SESSION["user_id"]) && $user->getID() == $_SESSION["user_id"]))
+			return;
+		//if ($user->getType() == 1 && $user->getID() != $_SESSION["user_id"])
+		//{
 			if (isset($_SESSION["username"]))
 			{
 				echo '<form class="form-inline" role="form" method="post">
@@ -49,7 +51,7 @@
 						<button class="button" type="submit">Submit Review</button>
 					</form>';
 			}
-		}
+		//}
 	}
 
 	function displayAppointments($user, $open)
@@ -57,7 +59,8 @@
 		if ($user->getType() == 1)
 		{
 			$openAppointments = getAppointments($user->getUsername(), $open);
-			echo '<table class="table table-hover">
+			echo '<form role="form" method="post">
+			<table class="table table-hover">
 			<caption>OPEN APPOINTMENTS</caption>
 				<thead>
 				<tr>
@@ -71,21 +74,29 @@
 				</tr>
 				</thead>
 				<tbody>';
-			foreach ($openAppointments as $a)
+			if (!empty($openAppointments))
 			{
-				echo '<tr>
-						<td>'.$a->getDate().'</td>
-						<td>'.$a->getStartTime().'</td>
-						<td>'.$a->getEndTime().'</td>
-						<td>'.$a->getInstrument().'</td>
-						<td>$'.number_format($a->getPrice(), 2, '.', ',').' USD</td>
-						<td>'.$a->getLocation().'</td>
-						<td><input type="checkbox" name="checkAppointments" value="'.$a->getAppointmentID().'"></td>
-					</tr>';
+				foreach ($openAppointments as $a)
+				{
+					echo '<tr>
+							<td>'.$a->getDate().'</td>
+							<td>'.$a->getStartTime().'</td>
+							<td>'.$a->getEndTime().'</td>
+							<td>'.$a->getInstrument().'</td>
+							<td>$'.number_format($a->getPrice(), 2, '.', ',').' USD</td>
+							<td>'.$a->getLocation().'</td>
+							<td><input type="checkbox" name="checkAppointments[]" value="'.$a->getAppointmentID().'"></td>
+						</tr>';
+				}
+				echo '</tbody>
+					</table>';
+				echo '<button class="button success large expanded" type="submit">Book Appointment</button>';
 			}
-			echo '</tbody>
-				</table>';
-			echo '<a href="#" class="button success large expanded">Book Appointment</a>';
+			else
+			{
+				echo '<tr><td colspan="6">No results to display</td></tr></tbody></table>';
+			}
+			echo '</form>';
 		}
 
 	}

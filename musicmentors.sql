@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2016 at 08:03 PM
+-- Generation Time: Apr 08, 2016 at 10:11 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -153,7 +153,7 @@ CREATE TABLE `mm_users` (
 INSERT INTO `mm_users` (`id`, `username`, `password`, `email`, `type`, `bio`, `profile_image_name`) VALUES
 (1, 'testmentor', 'password', 'testmentor@musicmentors.com', 1, 'I like to play classical and rock guitar and drums.\r\nRock on!', 'community_image_1418393964.png'),
 (2, 'drumguy20', 'password', 'drumguy20@musicmentor.com', 1, NULL, NULL),
-(3, 'znewman', 'password', 'znewman@musicmentors.com', 0, 'I like to play metal!', 'maxresdefault.jpg');
+(3, 'znewman', 'password2', 'znewman@mm.com', 0, 'I like to play metal and classical!', 'maxresdefault.jpg');
 
 -- --------------------------------------------------------
 
@@ -175,6 +175,7 @@ INSERT INTO `mm_user_genres` (`user_id`, `genre_id`) VALUES
 (1, 3),
 (2, 2),
 (2, 6),
+(3, 1),
 (3, 5);
 
 -- --------------------------------------------------------
@@ -238,7 +239,8 @@ ALTER TABLE `mm_reviews`
 -- Indexes for table `mm_users`
 --
 ALTER TABLE `mm_users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `mm_user_genres`
@@ -265,7 +267,7 @@ ALTER TABLE `mm_appointments`
 -- AUTO_INCREMENT for table `mm_auth`
 --
 ALTER TABLE `mm_auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `mm_genres`
 --

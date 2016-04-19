@@ -17,7 +17,7 @@
 		else
 			submitChanges($_SESSION["user_id"], $_POST["biography"], $_POST["instrument"], $_POST["genre"], null);
 
-		header("Location: ".$_SERVER["PHP_SELF"]);
+		header("Location: userPage.php?user=".$_SESSION["username"]);
 		//USER ID, BIOGRAPHY, INSTRUMENT ARRAY, GENRE ARRAY, PROFILE IMAGE FILE
 	}
 
@@ -33,7 +33,7 @@
 	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
     <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
-	<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>
 <body>
@@ -46,10 +46,7 @@
 			<ul class="breadcrumbs">
 				<li><a href="index.php">Home</a></li>
 				<li>
-					<a href="userPage.php?user=<?php echo $username?>"><?php if (isset($_SESSION["username"])) echo $_SESSION["username"]; ?></a>
-				</li>
-				<li>
-					<span class="show-for-sr">Current: </span>Edit Profile
+					<span class="show-for-sr">Current: </span> <?php if (isset($_SESSION["username"])) echo $_SESSION["username"]; ?>
 				</li>
 			</ul>
 		</nav>
@@ -63,6 +60,7 @@
 			<form id="imageUpload" name="imageUpload" enctype="multipart/form-data" method="post">
 				<input id="imageFile" name="imageFile" type="file">
 				<input id="max_file_size" type="hidden" name="MAX_FILE_SIZE" value="1048576">
+				<em>Files must be 1 MB or less in JPEG or PNG format</em>
 			<div>
 				<h5><em><u>Instruments</u></em>:</h5><?php displayFormInstrument();?><br/>
 			</div>
@@ -81,26 +79,14 @@
 				<a class="button">Twitter</a>
 				<a class="button">LinkedIn</a>
 			</div>
+			<br><br><button class="button" type="submit">SAVE CHANGES</button>
 		</div>
-			<button class="button" type="submit">SAVE CHANGES</button>
 		</form>
 	</div>
-	<div class="row column">
-		<hr>
-		<ul class="menu">
-			<li>Music Mentors</li>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">[#]</a></li>
-			<li><a href="#">[#]</a></li>
-			<li class="float-right">Copyright 2016</li>
-		</ul>
-	</div>
-
-	<script src="assets/js/vendor/foundation.js"></script>
+<?php include("includes/mm_footer.inc.php"); ?>
 	<script src="assets/js/vendor/jquery.js"></script>
-
+	<script src="assets/js/vendor/foundation.js"></script>
 	<script src="assets/js/edit_profile.js"></script>
-
 	<script>
 		$(document).foundation();
 	</script>

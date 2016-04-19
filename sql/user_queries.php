@@ -2,14 +2,14 @@
 	require_once("db_config.php");
 
 	//This function attempts to log a user in, returns false if it doesnt work
-	function attemptLogin($username, $password, &$id)
+	function attemptLogin($username, $password, &$id, &$type)
 	{
 		try
 		{
 			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			//Prepare a statement by setting parameters
-			$sql = 'SELECT id, username, password FROM mm_users WHERE username=:username';
+			$sql = 'SELECT id, username, password, type FROM mm_users WHERE username=:username';
 			$statement = $pdo->prepare($sql);
 			$statement->bindValue(':username', $username); //Bind value of sql statement with value of id in query string
 			$statement->execute();
@@ -21,6 +21,7 @@
 			    if ($password == $row['password'])
 			    {
 					$id = $row["id"];
+					$type = $row["type"];
 					return true;
 				}
 				else
@@ -105,6 +106,31 @@
 			}
 			$pdo = null;
 			return $names;
+		}
+
+		catch (PDOException $e) {
+			die( $e->getMessage() );
+		}
+	}
+	function getUsername($id)
+	{
+		$name;
+		try
+		{
+			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
+			$sql = 'SELECT username FROM mm_users WHERE id=:id';
+			$statement = $pdo->prepare($sql);
+			$statement->bindValue(':id', $id);
+			$statement->execute();
+
+
+			while($result = $statement->fetch()){
+				$name = $result["username"];
+			}
+			$pdo = null;
+			return $name;
 		}
 
 		catch (PDOException $e) {
@@ -199,10 +225,11 @@
 			die( $e->getMessage() );
 		}
 	}
+
 	function getUserId($user){
 		try
 			{
-				
+
 				$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				//Prepare a statement by setting parameters
@@ -211,10 +238,10 @@
 				$statement->bindValue(':user', $user);
 				$statement->execute();
 
-				
+
 				$result = $statement->fetch();
 				$userId = $result["id"];
-				
+
 				$pdo = null;
 				return $userId;
 			}
@@ -225,6 +252,8 @@
 
 	}
 	function updateInfo($user, $input, $mode){
+		if ($mode == "username" && userExists($input))
+			return "That username is already taken.";
 		switch ($mode) {
 			case 'username':
 				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
@@ -250,17 +279,17 @@
 				$statement->bindValue(':input', $input);
 				$statement->bindValue(':id', $user);
 				$statement->execute();
-				
+
 				$pdo = null;
 				if($mode=='username'){
 					header("Location: logout.php");
 				}
-				return true;
+				return "Details successfully updated!";
 			}
 
 			catch (PDOException $e) {
 				die( $e->getMessage() );
-				return false;
+				return "An error occurred, please try again later.";
 			}
 	}
 ?>

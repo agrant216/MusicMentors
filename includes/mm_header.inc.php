@@ -9,7 +9,14 @@
 					<ul class="submenu menu vertical" data-submenu>
 						<li><a href=<?php if (isset($_SESSION["username"])) echo '"userPage.php?user='.$_SESSION["username"].'"'; else echo '"login.php"'; ?> >View My Profile</a></li>
 						<li><a href="userPage-edit.php">Edit My Profile</a></li>
-						<li><a href="edit-info.php?id=<?php echo getUserId($_SESSION['username']); ?>">Edit My Account Settings</a></li>
+						<li><a href="edit-info.php">Edit My Account Settings</a></li>
+					</ul>
+				</li>
+				<li class="has-submenu">
+					<a href="#">Appointments</a>
+					<ul class="submenu menu verticual" data-submenu>
+						<li><a href="appointments.php">View My Appointments</a></li>
+						<?php if(isset($_SESSION["user_type"]) && $_SESSION["user_type"] == 1) echo '<li><a href="addAppointment.php">Add Appointment</a></li>';?>
 					</ul>
 				</li>
 				<li> <a href="search.php">Mentor Search</a> </li>

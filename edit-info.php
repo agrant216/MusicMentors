@@ -1,15 +1,17 @@
 <?php
 include_once("sql/user_queries.php");
-if (isset($_GET["id"])) {
-	$id=$_GET["id"];
+session_start();
+$error="";
+if (isset($_SESSION["user_id"])) {
+	$id=$_SESSION["user_id"];
 }
+else
+	header("Location: login.php");
 if (isset($_GET["mode"])) {
 	if (isset($_POST["input"])) {
-		updateInfo($id,$_POST["input"],$_GET["mode"]);
+		$error = updateInfo($id,$_POST["input"],$_GET["mode"]);
 	}
 
-}
-session_start();
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -19,32 +21,11 @@ session_start();
 	<title>Music Mentors</title>
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
+	<link rel="stylesheet" href="assets/js/vendor/form-validator/theme-default.min.css">
 </head>
 <body>
-	<div class="top-bar">
-		<div class="row">
-			<div class="top-bar-left">
-				<ul class="dropdown menu" data-dropdown-menu>
-					<li class="menu-text">Music Mentors</li>
-					<li class="has-submenu">
-						<a href="#">One</a>
-						<ul class="submenu menu vertical" data-submenu>
-							<li><a href="#">One</a></li>
-							<li><a href="#">Two</a></li>
-							<li><a href="#">Three</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div class="top-bar-right">
-				<ul class="menu">
-					<li><input type="search" placeholder="Search"></li>
-					<li><button type="button" class="button">Search</button></li>
-					<li><a href="login.php" class="button">Login/Register</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+
+<?php include("includes/mm_header.inc.php");?>
 
 	<br>
 		<div class="row columns">
@@ -63,10 +44,13 @@ session_start();
 	<div class="column row">
 		<h3>Edit Info</h3>
 		<hr>
+		<h4 style="color: #FF0000"><?php echo $error;?></h4>
 		<ul class="tabs" data-tabs id="example-tabs">
 			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Account Information</a></li>
+
 			<li class="tabs-title"><a href="#panel2">Profile Information</a></li>
 			<li class="tabs-title"><a href="#panel3">Advanced</a></li>
+
 		</ul>
 		<div class="tabs-content" data-tabs-content="example-tabs">
 			<div class="tabs-panel is-active" id="panel1">
@@ -74,9 +58,9 @@ session_start();
 					<li class="accordion-item" data-accordion-item>
 						<a href="#" class="accordion-title">Username</a>
 						<div class="accordion-content" data-tab-content>
-							<form action="<?php echo 'edit-info.php?id='.$id.'&mode=username'; ?>" method="POST">
+							<form class="changeInfo" action="<?php echo 'edit-info.php?mode=username'; ?>" method="POST">
 								<label>New Username
-        							<input type="text" class="form-control" name="input" pattern="^[a-zA-Z0-9_-]{6,18}$" data-validation-help="Username must be between 6 and 18, and no special characters">
+        							<input type="text" class="form-control" name="input" pattern="^[a-zA-Z0-9_-]{6,18}$" data-validation-help="Username must be between 6 and 18, and no special characters" data-validation-error-msg="Username must be between 6 and 18, and no special characters">
       							</label>
       							<button type="submit" class="success button">Change</button>
 							</form>
@@ -85,7 +69,7 @@ session_start();
 					<li class="accordion-item" data-accordion-item>
 						<a href="#" class="accordion-title">Password</a>
 						<div class="accordion-content" data-tab-content>
-							<form action="<?php echo 'edit-info.php?id='.$id.'&mode=password'; ?>" method="POST">
+							<form class="changeInfo" action="<?php echo 'edit-info.php?mode=password'; ?>" method="POST">
 								<label>New Password
         							<input type="password" class="form-control" name="password" data-validation="length" data-validation-length="min8">
       							</label>
@@ -99,10 +83,12 @@ session_start();
 					<li class="accordion-item" data-accordion-item>
 						<a href="#" class="accordion-title">Email</a>
 						<div class="accordion-content" data-tab-content>
-							<form action="<?php echo 'edit-info.php?id='.$id.'&mode=email'; ?>" method="POST">
+							<form class="changeInfo" action="<?php echo 'edit-info.php?mode=email'; ?>" method="POST">
 								<label>New Email
-        							<input type="email" class="form-control" name="input" data-validation="email">
+        							<input type="email" class="form-control" name="email" data-validation="email" data-validation-help="Email must be of the form: email@domain.com">
       							</label>
+      							<label>Confirm Email
+      								<input type="email" class="form-control" name="input" data-validation="confirmation" data-validation-confirm="email" data-validation-error-msg="Email entries do not match">
       							<button type="submit" class="success button">Change</button>
 							</form>
 						</div>
@@ -182,20 +168,11 @@ session_start();
 			</div>
 		</div>
 	</div>
-	<div class="row column">
-		<hr>
-		<ul class="menu">
-			<li>Music Mentors</li>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">[#]</a></li>
-			<li><a href="#">[#]</a></li>
-			<li class="float-right">Copyright 2016</li>
-		</ul>
-	</div>
+	<?php include("includes/mm_footer.inc.php"); ?>
 	<script src="assets/js/vendor/jquery.js"></script>
-	<script src="assets/js/vendor/foundation.js"></script>
 	<script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
-	<script type="text/javascript" src="assets/js/js-validation.js"></script>
+		<script type="text/javascript" src="assets/js/js-validation2.js"></script>
+	<script src="assets/js/vendor/foundation.js"></script>
 	<script>
 		$(document).foundation();
 	</script>

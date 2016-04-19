@@ -56,7 +56,7 @@ function displaySearchOptions($option)
 	<script src="../../assets/js/html5shiv.js"></script>
 	<script src="../../assets/js/respond.min.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+	<link rel="stylesheet" href="assets/css/foundation.min.css">	
 	<link rel="stylesheet" href="assets/css/search.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>
@@ -88,29 +88,31 @@ function displaySearchOptions($option)
 										<button class="btn btn-default" type="submit">Search</button>
 
 									</div>
-								</span>
-							</div>
-						</form>
-					</div>
-					<table class="table">
-						<tr>
-							<th>Username</th>
-							<th>Genres</th>
-							<th>Instruments</th>
-						</tr>
-						<?php
-						foreach($users as $u)
-						{
-							outputRow($u->getUsername(), $u->getGenres(), $u->getInstruments());
-						}
-						?>
-					</table>
-				</div> <!-- End of Panel -->
-			</div>	<!-- End of col-md-10 -->
-		</div> <!-- End of row -->
-	</div> <!-- End of Container -->
-	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+									</span>
+								</div>
+							</form>
+                		</div>
+                 		<table class="table">
+                 			<tr>
+                 				<th>Username</th>
+                 				<th>Genres</th>
+                 				<th>Instruments</th>
+                 			</tr>
+							<?php
+								foreach($users as $u)
+								{
+									outputRow($u->getUsername(), $u->getGenres(), $u->getInstruments());
+								}
+							?>
+						</table>
+					</div> <!-- End of Panel -->
+				</div>	<!-- End of col-md-10 -->
+			</div> <!-- End of row -->
+		</div> <!-- End of Container -->
+		<?php include("includes/mm_footer.inc.php"); ?>
+	<script src="assets/js/vendor/jquery.js"></script>
+	<script src="assets/js/vendor/foundation.js"></script>
+
 	<script>
 	$(document).foundation();
 	</script>
