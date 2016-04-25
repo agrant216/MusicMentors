@@ -89,6 +89,23 @@
 		}
 		return false;
 	}
+	function deleteUser($userId){
+		try
+		{
+			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
+			$sql = 'DELETE FROM mm_users WHERE id=:userId';
+			$statement = $pdo->prepare($sql);
+			$statement->bindValue(':userId', $userId); //Bind value of sql statement with value of id in query string
+			$statement->execute();
+
+			$pdo = null;
+		}
+		catch (PDOException $e) {
+			die( $e->getMessage() );
+		}
+	}
 	function getUserNames()
 	{
 		try
