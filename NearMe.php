@@ -38,8 +38,14 @@
               lng: position.coords.longitude
             };
 
-            infoWindow.setPosition(pos);
+            var home = new google.maps.Marker({
+              position: pos,
+              map: map,
+              title: 'home'
+            });
+
             infoWindow.setContent('My Location');
+            infoWindow.open(map, home);
             map.setCenter(pos);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -55,6 +61,20 @@
         infoWindow.setContent(browserHasGeolocation ?
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
+      }
+      function createMarker(pos,info){
+        var infowindow = new google.maps.InfoWindow({
+          content: info
+        });
+
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
       }
     </script>
     <script async defer
