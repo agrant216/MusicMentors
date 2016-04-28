@@ -11,7 +11,7 @@ if (isset($_GET["mode"])) {
 	if (isset($_POST["input"])) {
 		$error = updateInfo($id,$_POST["input"],$_GET["mode"]);
 	}
-
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -24,8 +24,7 @@ if (isset($_GET["mode"])) {
 	<link rel="stylesheet" href="assets/js/vendor/form-validator/theme-default.min.css">
 </head>
 <body>
-
-<?php include("includes/mm_header.inc.php");?>
+	<?php include("includes/mm_header.inc.php");?>
 
 	<br>
 		<div class="row columns">
@@ -47,10 +46,8 @@ if (isset($_GET["mode"])) {
 		<h4 style="color: #FF0000"><?php echo $error;?></h4>
 		<ul class="tabs" data-tabs id="example-tabs">
 			<li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Account Information</a></li>
-
-			<li class="tabs-title"><a href="#panel2">Profile Information</a></li>
-			<li class="tabs-title"><a href="#panel3">Advanced</a></li>
-
+			<!--<li class="tabs-title"><a href="#panel2">Profile Information</a></li>
+			<li class="tabs-title"><a href="#panel3">Other</a></li>-->
 		</ul>
 		<div class="tabs-content" data-tabs-content="example-tabs">
 			<div class="tabs-panel is-active" id="panel1">

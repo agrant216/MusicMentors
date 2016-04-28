@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2016 at 10:11 AM
+-- Generation Time: Apr 28, 2016 at 02:29 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -44,8 +44,10 @@ CREATE TABLE `mm_appointments` (
 --
 
 INSERT INTO `mm_appointments` (`id`, `mentor_id`, `student_id`, `date`, `start_time`, `end_time`, `price`, `instrument_id`, `location`, `open`) VALUES
-(1, 1, NULL, '2016-04-06', '14:00:00', '15:00:00', 60, 1, 'Online', 1),
-(2, 1, 3, '2016-04-07', '14:00:00', '15:00:00', 60, 1, 'Online', 0);
+(3, 1, 3, '2016-04-23', '00:00:00', '12:00:00', 60, 1, 'Online', 0),
+(4, 1, 3, '2016-04-30', '12:00:00', '13:00:00', 60, 1, 'Online', 0),
+(5, 1, 3, '2016-04-30', '12:00:00', '13:00:00', 50, 1, 'Online', 0),
+(6, 1, 3, '2016-04-30', '17:00:00', '18:00:00', 60, 1, 'Online', 0);
 
 -- --------------------------------------------------------
 
@@ -105,6 +107,26 @@ INSERT INTO `mm_instruments` (`id`, `instrument`) VALUES
 (4, 'Percussion'),
 (5, 'Vocals'),
 (6, 'Drums');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mm_orders`
+--
+
+CREATE TABLE `mm_orders` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `date_time` datetime NOT NULL,
+  `total` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `mm_orders`
+--
+
+INSERT INTO `mm_orders` (`id`, `student_id`, `date_time`, `total`) VALUES
+(1, 3, '2016-04-28 00:11:37', 110);
 
 -- --------------------------------------------------------
 
@@ -230,6 +252,12 @@ ALTER TABLE `mm_instruments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mm_orders`
+--
+ALTER TABLE `mm_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `mm_reviews`
 --
 ALTER TABLE `mm_reviews`
@@ -262,12 +290,12 @@ ALTER TABLE `mm_user_instruments`
 -- AUTO_INCREMENT for table `mm_appointments`
 --
 ALTER TABLE `mm_appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `mm_auth`
 --
 ALTER TABLE `mm_auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `mm_genres`
 --
@@ -278,6 +306,11 @@ ALTER TABLE `mm_genres`
 --
 ALTER TABLE `mm_instruments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `mm_orders`
+--
+ALTER TABLE `mm_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `mm_reviews`
 --
