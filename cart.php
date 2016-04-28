@@ -10,11 +10,15 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$i=0;
+		$total=0;
 		foreach ($_SESSION["cart"] as $a)
 		{
 			$i++;
 			$error = updateAppointmentStudent($a, $_SESSION["user_id"], $i);
+			$appt = getAppointmentByID($a);
+			$total+=$appt->getPrice();
 		}
+		addOrder($_SESSION["user_id"], $total);
 		unset($_SESSION["cart"]);
 	}
 
@@ -57,7 +61,9 @@
 						<td>$'.number_format($a->getPrice(), 2, '.', ',').' USD</td>
 						<td>'.$a->getLocation().'</td>
 					</tr>
-				</tbody>
+				';
+			}
+			echo '</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="7">Total: $'.number_format($total, 2, '.', ',').' USD</td>
@@ -65,7 +71,6 @@
 				</tfoot>
 				</table>
 				<button class="button primary large expanded" type="submit">Checkout</button>';
-			}
 		}
 		else
 			echo '<tr><td colspan="7">No results to display</td></tr></tbody></table>';
