@@ -56,7 +56,9 @@
 			Genre: <select class="form-control" name="option_genre">
 				<?php displaySearchOptions("genre"); ?>
 			</select>
-			Location: <input type="text" name="location" placeholder="Enter Online for online lesson" required>
+			Location: <input id="autocomplete" onFocus="geolocate()" type="text" name="location" placeholder="Enter Online for online lesson" required>
+			<input type="hidden" id="lat" name="lat">
+			<input type="hidden"id="lng" name="lng">
 			<button class="button success large expanded" type="submit">Make Appointment</button>
 		</form>
 
@@ -68,5 +70,9 @@
 	<script>
 		$(document).foundation();
 	</script>
+	<script src="assets/js/locationInput.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgsOVdVnT6BvjyR_baJ4-70YRn6YrERU&libraries=places&callback=initAutocomplete"
+        async defer></script>
+    
 </body>
 </html>

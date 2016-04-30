@@ -166,7 +166,10 @@
 		}
 		return $error;
 	}
+	function addLocation($user_id,$address){
+		
 
+	}
 	function deleteAppointment($id)
 	{
 		try
