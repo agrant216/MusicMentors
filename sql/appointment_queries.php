@@ -1,6 +1,7 @@
 <?php
 	require_once("db_config.php");
 	require_once("./includes/Appointment.class.php");
+	date_default_timezone_set('UTC');
 
 	function getAppointments($name, $open)
 	{
@@ -84,7 +85,7 @@
 		return $appts;
 	}
 
-	function getAppointmentByLoc($Location)
+	function getAppointmentByLoc($location)
 	{
 		$appts;
 		try
@@ -201,8 +202,10 @@
 		}
 		return $error;
 	}
-	function addLocation($user_id,$username,$values){
+function addLocation($user_id,$values){
 		$a = getAppointmentByLoc($values["location"]);
+		$username = getUsername($a->getMentorID());
+		$info = "<div><h2>".$username."</h2><h4>".$a->getLocation()."</h4><h4>".$a->getDate()."</h4><h4>".$a->getStartTime()." - ".$a->getEndTime()."</h4><h4>".$a->getInstrument()."</h4><h4>".$a->getPrice()."</h4><h3><a href='userPage.php?user=".$username."'>Visit User Page</a></h3></div>";
 		try {
 			 $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 			 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -214,6 +217,7 @@
 			 $statement->bindValue(':address', $values["location"]);
 			 $statement->bindValue(':lat', $values["lat"]);
 			 $statement->bindValue(':lng', $values["lng"]);
+			 $statement->bindValue(':marker', $info);
 			 $statement->execute();
 			 $pdo = null;
 		  }
