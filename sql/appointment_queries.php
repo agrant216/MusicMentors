@@ -83,7 +83,39 @@
 		}
 		return $appts;
 	}
+	function getAppointmentByLoc($Location)
+	{
+		$appts;
+		try
+		{
+			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
 
+			//SQL STATEMENTS
+			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+			INNER JOIN mm_instruments on mm_appointments.instrument_id = mm_instruments.id
+			WHERE mm_appointments.location = :location';
+
+			//PREPARE STATEMENTS
+			$statement = $pdo->prepare($sql);
+
+			//BIND VALUES FOR INITIAL QUERY and EXECUTE
+			$statement->bindValue(':location', $location);
+
+			$statement->execute();
+			while ($row =  $statement->fetch())
+			{
+				$appts = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+			}
+			$pdo = null;
+		}
+
+		catch (PDOException $e) {
+			die( $e->getMessage() );
+		}
+		return $appts;
+	}
 	function getAppointmentsByStudentID($id)
 	{
 		$appts = array();
@@ -158,6 +190,9 @@
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
+			if(($values["location"]!="Online")&&($values["location"]!="online")){
+				addLocation($id,$values);
+			}
 		}
 
 		catch (PDOException $e) {
@@ -166,8 +201,26 @@
 		}
 		return $error;
 	}
-	function addLocation($user_id,$address){
-		
+	function addLocation($user_id,$username,$values){
+		$a = getAppointmentByLoc($values["location"]);
+		try {
+			 $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
+			 $sql = 'INSERT INTO mm_locations (appt_id, address, lat, lng, marker) VALUES (:appt_id, :address, :lat, :lng, :marker)';
+			 $statement = $pdo->prepare($sql);
+
+			 $statement->bindValue(':appt_id', $a->getAppointmentID()); //Bind value of sql statement with value of id in query string
+			 $statement->bindValue(':address', $values["location"]);
+			 $statement->bindValue(':lat', $values["lat"]);
+			 $statement->bindValue(':lng', $values["lng"]);
+			 $statement->execute();
+			 $pdo = null;
+		  }
+
+		   catch (PDOException $e) {
+			  die( $e->getMessage() );
+	   		}
 
 	}
 	function deleteAppointment($id)
