@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2016 at 02:29 AM
+-- Generation Time: May 02, 2016 at 06:21 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -36,18 +36,17 @@ CREATE TABLE `mm_appointments` (
   `price` float NOT NULL,
   `instrument_id` int(11) NOT NULL,
   `location` text NOT NULL,
-  `open` tinyint(4) NOT NULL
+  `open` tinyint(4) NOT NULL,
+  `timezone` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mm_appointments`
 --
 
-INSERT INTO `mm_appointments` (`id`, `mentor_id`, `student_id`, `date`, `start_time`, `end_time`, `price`, `instrument_id`, `location`, `open`) VALUES
-(3, 1, 3, '2016-04-23', '00:00:00', '12:00:00', 60, 1, 'Online', 0),
-(4, 1, 3, '2016-04-30', '12:00:00', '13:00:00', 60, 1, 'Online', 0),
-(5, 1, 3, '2016-04-30', '12:00:00', '13:00:00', 50, 1, 'Online', 0),
-(6, 1, 3, '2016-04-30', '17:00:00', '18:00:00', 60, 1, 'Online', 0);
+INSERT INTO `mm_appointments` (`id`, `mentor_id`, `student_id`, `date`, `start_time`, `end_time`, `price`, `instrument_id`, `location`, `open`, `timezone`) VALUES
+(7, 1, NULL, '2016-05-28', '12:00:00', '13:00:00', 40, 1, 'New Philadelphia, OH, United States', 1, '(GMT-05:00) Eastern Time (US & Canada)'),
+(8, 1, NULL, '2016-05-20', '07:00:00', '08:00:00', 40, 1, 'New Philadelphia, OH, United States', 1, '(GMT-12:00) International Date Line West');
 
 -- --------------------------------------------------------
 
@@ -107,6 +106,21 @@ INSERT INTO `mm_instruments` (`id`, `instrument`) VALUES
 (4, 'Percussion'),
 (5, 'Vocals'),
 (6, 'Drums');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mm_locations`
+--
+
+CREATE TABLE `mm_locations` (
+  `id` int(11) NOT NULL,
+  `appt_id` int(11) NOT NULL,
+  `address` varchar(80) NOT NULL,
+  `lat` float(10,6) NOT NULL,
+  `lng` float(10,6) NOT NULL,
+  `marker` tinytext NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -252,6 +266,12 @@ ALTER TABLE `mm_instruments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mm_locations`
+--
+ALTER TABLE `mm_locations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `mm_orders`
 --
 ALTER TABLE `mm_orders`
@@ -290,7 +310,7 @@ ALTER TABLE `mm_user_instruments`
 -- AUTO_INCREMENT for table `mm_appointments`
 --
 ALTER TABLE `mm_appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `mm_auth`
 --
@@ -306,6 +326,11 @@ ALTER TABLE `mm_genres`
 --
 ALTER TABLE `mm_instruments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `mm_locations`
+--
+ALTER TABLE `mm_locations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `mm_orders`
 --
