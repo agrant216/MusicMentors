@@ -43,9 +43,8 @@
               map: map,
               title: 'home'
             });
-            var info = "<div><h2>Username</h2><h4>location</h4><h4>date</h4><h4>stime-etime</h4><h4>genre</h4><h4>instrument</h4><h4>price</h4><h3><a href='userPage.php?user=Username'>Visit User Page</a></h3></div>"
-            infoWindow.setContent('My Location');
 
+            infoWindow.setContent('My Location');
             infoWindow.open(map, home);
             map.setCenter(pos);
           }, function() {
