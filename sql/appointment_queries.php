@@ -231,6 +231,7 @@ function addLocation($user_id,$values){
 	   		}
 
 	}
+	
 	function deleteAppointment($id)
 	{
 		try

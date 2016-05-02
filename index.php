@@ -11,8 +11,10 @@
 			else
 				header("Location: logout.php");
 	}
-	else
+	else{
  		session_start();
+		//queryMarkers();
+	}
 ?>
 
 <!doctype html>
