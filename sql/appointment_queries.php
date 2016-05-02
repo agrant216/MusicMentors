@@ -1,6 +1,7 @@
 <?php
 	require_once("db_config.php");
 	require_once("./includes/Appointment.class.php");
+	require_once("user_queries.php");
 	date_default_timezone_set('UTC');
 
 	function getAppointments($name, $open)
@@ -194,6 +195,9 @@
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
+			if(($values["location"]!="Online")&&($values["location"]!="online")){
+				addLocation($id,$values);
+			}
 		}
 
 		catch (PDOException $e) {
