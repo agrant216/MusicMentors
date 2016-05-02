@@ -13,11 +13,11 @@
 
 			//SQL STATEMENTS
 			if ($open == 0)
-				$sql = 'SELECT mm_appointments.id, date, mm_users.username AS student_name, mm_appointments.mentor_id, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+				$sql = 'SELECT mm_appointments.id, date, mm_users.username AS student_name, mm_appointments.mentor_id, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 				INNER JOIN mm_instruments ON mm_appointments.instrument_id = mm_instruments.id INNER JOIN mm_users ON mm_appointments.student_id = mm_users.id
 				WHERE mm_appointments.mentor_id = (SELECT id FROM mm_users WHERE username = :name) AND open=:open';
 			else
-				$sql = 'SELECT mm_appointments.id, date, mm_appointments.mentor_id, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+				$sql = 'SELECT mm_appointments.id, date, mm_appointments.mentor_id, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 				INNER JOIN mm_instruments ON mm_appointments.instrument_id = mm_instruments.id
 				WHERE mm_appointments.mentor_id = (SELECT id FROM mm_users WHERE username = :name) AND open=:open';
 
@@ -37,9 +37,9 @@
 					continue;
 				}
 				if ($open == 0)
-					$appts[] = new Appointment($row["id"], $row["mentor_id"], $row["student_name"], $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+					$appts[] = new Appointment($row["id"], $row["mentor_id"], $row["student_name"], $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"], $row["timezone"]);
 				else
-					$appts[] = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+					$appts[] = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"], $row["timezone"]);
 			}
 			$pdo = null;
 		}
@@ -60,7 +60,7 @@
 			//Prepare a statement by setting parameters
 
 			//SQL STATEMENTS
-			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 			INNER JOIN mm_instruments on mm_appointments.instrument_id = mm_instruments.id
 			WHERE mm_appointments.id = :id';
 
@@ -73,7 +73,7 @@
 			$statement->execute();
 			while ($row =  $statement->fetch())
 			{
-				$appts = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+				$appts = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"], $row["timezone"]);
 			}
 			$pdo = null;
 		}
@@ -83,6 +83,7 @@
 		}
 		return $appts;
 	}
+
 	function getAppointmentByLoc($Location)
 	{
 		$appts;
@@ -116,6 +117,7 @@
 		}
 		return $appts;
 	}
+
 	function getAppointmentsByStudentID($id)
 	{
 		$appts = array();
@@ -126,7 +128,7 @@
 			//Prepare a statement by setting parameters
 
 			//SQL STATEMENTS
-			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 			INNER JOIN mm_instruments on mm_appointments.instrument_id = mm_instruments.id
 			WHERE mm_appointments.student_id = :id';
 
@@ -139,7 +141,7 @@
 			$statement->execute();
 			while ($row =  $statement->fetch())
 			{
-				$appts[] = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+				$appts[] = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"], $row["timezone"]);
 			}
 			$pdo = null;
 		}
@@ -154,7 +156,7 @@
 	{
 		if(!strtotime($values["date"]) || strtotime($values["date"])<strtotime(date("Y-m-d")))
 			return false;
-		if (!preg_match("/^(2[0-3]|[01][0-9]):([0-5][0-9])$/", $values["endTime"]))
+		if (!preg_match("/^(2[0-3]|[01][0-9]):([0-5][0-9])$/", $values["startTime"]))
 			return false;
 		if (!preg_match("/^(2[0-3]|[01][0-9]):([0-5][0-9])$/", $values["endTime"]))
 			return false;
@@ -173,7 +175,7 @@
 			//Prepare a statement by setting parameters
 
 			//SQL STATEMENTS
-			$sql = 'INSERT INTO mm_appointments(mentor_id, date, start_time, end_time, price, instrument_id, location, open) VALUES(:id, :date, :s_t, :e_t, :price, :inst, :loc, "1")';
+			$sql = 'INSERT INTO mm_appointments(mentor_id, date, start_time, end_time, price, instrument_id, location, open, timezone) VALUES(:id, :date, :s_t, :e_t, :price, :inst, :loc, "1", :tz)';
 
 			//PREPARE STATEMENTS
 			$statement = $pdo->prepare($sql);
@@ -186,13 +188,11 @@
 			$statement->bindValue(':price', $values["price"]);
 			$statement->bindValue(':inst', $values["option_instrument"]);
 			$statement->bindValue(':loc', $values["location"]);
+			$statement->bindValue(':tz', $values["timezone"]);
 
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
-			if(($values["location"]!="Online")&&($values["location"]!="online")){
-				addLocation($id,$values);
-			}
 		}
 
 		catch (PDOException $e) {
@@ -285,8 +285,40 @@
 			die( $e->getMessage() );
 		}
 	}
-	function updateAppointmentInfo()
+	function updateAppointmentInfo($values, $id)
 	{
+		$error="";
+		try
+		{
+			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
 
+			//SQL STATEMENTS
+			$sql = 'UPDATE mm_appointments SET date=:date, start_time=:s_t, end_time=:e_t, price=:price, instrument_id=:inst, location=:loc, timezone=:tz WHERE id = :id';
+
+			//PREPARE STATEMENTS
+			$statement = $pdo->prepare($sql);
+
+			//BIND VALUES FOR INITIAL QUERY and EXECUTE
+			$statement->bindValue(':id', $id);
+			$statement->bindValue(':date', $values["date"]);
+			$statement->bindValue(':s_t', $values["startTime"]);
+			$statement->bindValue(':e_t', $values["endTime"]);
+			$statement->bindValue(':price', $values["price"]);
+			$statement->bindValue(':inst', $values["option_instrument"]);
+			$statement->bindValue(':loc', $values["location"]);
+			$statement->bindValue(':tz', $values["timezone"]);
+
+			$statement->execute();
+			$pdo = null;
+			$error="Success! Appointment updated.";
+		}
+
+		catch (PDOException $e) {
+			$error = "Unexpected error, please try again later.";
+			die( $e->getMessage() );
+		}
+		return $error;
 	}
 ?>

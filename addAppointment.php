@@ -9,20 +9,43 @@
 	if (isset($_POST) && !empty($_POST))
 	{
 		if (checkAppointmentValues($_POST))
-			addAppointment($_POST, $_SESSION["user_id"]);
+			$error = addAppointment($_POST, $_SESSION["user_id"]);
 		else
 			$error = "Please check input values";
 	}
 
-	function displaySearchOptions($option)
+	function displaySearchOptions($option, $appt)
+	{
+		foreach (getAllOptions($option) as $g)
 		{
-			foreach (getAllOptions($option) as $g)
-			{
-				if (isset($_POST["option_".$option]) && $_POST["option_".$option] == $g["id"])
-					echo '<option value="'.$g["id"].'" selected>'.$g["name"].'</option>';
-				else
-					echo '<option value="'.$g["id"].'">'.$g["name"].'</option>';
-			}
+			if ((isset($_POST["option_".$option]) && $_POST["option_".$option] == $g["id"]) || ($appt!=null && $appt->getInstrument() == $g["name"]))
+				echo '<option value="'.$g["id"].'" selected>'.$g["name"].'</option>';
+			else
+				echo '<option value="'.$g["id"].'">'.$g["name"].'</option>';
+		}
+	}
+	function displayForm()
+	{
+		echo '<form id="login" role="form" method="post">';
+		echo '<label for="date">Date:</label>';
+		echo '<input type="date" name="date" min="'.date("Y-m-d").'" required="required" data-validation-help="This is the date of the appointment.It must be a valid date in the following format MM/DD/YYYY starting from '.date("m/d/Y").'" data-validation-error-msg="Must be a valid date in the following format MM/DD/YYYY starting from '.date("m/d/Y").'">';
+		echo '<label for="startTime">Start Time:</label>';
+		echo '<input type="time" name="startTime" required="required" data-validation-help="This is time that the appointment will start. It must be a valid time in the following format HH:MM AM/PM using the 12 hour clock" data-validation-error-msg="Must be a valid time in the following format HH:MM AM/PM using the 12 hour clock">';
+		echo '<label for="endTime">End Time:</label>';
+		echo '<input type="time" name="endTime" required="required" data-validation-help="This is the time that the appointment will end. It must be a valid time in the following format HH:MM AM/PM using the 12 hour clock" data-validation-error-msg="Must be a valid time in the following format HH:MM AM/PM using the 12 hour clock">';
+		echo '<label for="timezone">Time Zone:</label>';
+		include("includes/timezone.php");
+		echo '<label for="price">Price (USD):</label>';
+		echo '<label for="option_instrument">Instrument:</label>';
+		echo '<select class="form-control" name="option_instrument">';
+		displaySearchOptions("instrument", $appt);
+		echo '</select>';
+		echo '<label for="location">Location:</label>';
+		echo '<input id="autocomplete" onFocus="geolocate()" type="text" name="location" placeholder="Enter Online for online lesson" required="required" data-validation-help="This is the location of the lesson. Enter Online for an online lesson." data-validation-error-msg="Enter a valid location or Online for an Online lesson">';
+		echo '<input type="hidden" id="lat" name="lat">
+			<input type="hidden"id="lng" name="lng">';
+		echo '<button class="button success large expanded" type="submit">Make Appointment</button>';
+		echo '</form>';
 	}
 ?>
 
@@ -44,28 +67,13 @@
                <h2>Add Appointment</h2>
             </div>
             <h3><?php echo $error;?></h3>
-		<form role="form" method="post">
-			Date: <input type="date" name="date" min="<?php echo date('Y-m-d');?>" required>
-			Start Time: <input type="time" name="startTime" required>
-			End Time: <input type="time" name="endTime" required>
-			Time Zone:  <?php include("includes/timezone.php");?>
-			Price: <input type="number" name="price" min="1" step=".01" pattern="^-?\d+(\.\d{2})?$" required> USD
-			Instrument: <select class="form-control" name="option_instrument">
-				<?php displaySearchOptions("instrument"); ?>
-			</select>
-			Genre: <select class="form-control" name="option_genre">
-				<?php displaySearchOptions("genre"); ?>
-			</select>
-			Location: <input id="autocomplete" onFocus="geolocate()" type="text" name="location" placeholder="Enter Online for online lesson" required>
-			<input type="hidden" id="lat" name="lat">
-			<input type="hidden"id="lng" name="lng">
-			<button class="button success large expanded" type="submit">Make Appointment</button>
-		</form>
-
+           <?php displayForm(); ?>
 		</div>
 	</div>
 	<?php include("includes/mm_footer.inc.php");?>
 	<script src="assets/js/vendor/jquery.js"></script>
+	 <script src="assets/js/vendor/form-validator/jquery.form-validator.min.js"></script>
+	<script type="text/javascript" src="assets/js/js-validation.js"></script>
 	<script src="assets/js/vendor/foundation.js"></script>
 	<script>
 		$(document).foundation();
@@ -73,6 +81,6 @@
 	<script src="assets/js/locationInput.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgsOVdVnT6BvjyR_baJ4-70YRn6YrERU&libraries=places&callback=initAutocomplete"
         async defer></script>
-    
+
 </body>
 </html>

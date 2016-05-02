@@ -11,8 +11,9 @@
 		private $instrument;
 		private $location;
 		private $open;
+		private $timeZone;
 
-		public function __construct($id, $m_id, $s_name, $d, $sT, $eT, $p, $i, $l, $o)
+		public function __construct($id, $m_id, $s_name, $d, $sT, $eT, $p, $i, $l, $o, $tz)
 		{
 			$this->id = $id;
 			$this->mentorID = $m_id;
@@ -24,6 +25,7 @@
 			$this->instrument = $i;
 			$this->location = $l;
 			$this->open = $o;
+			$this->timeZone = $tz;
 		}
 
 		public function setAppointmentID($x) { $this->id = $x; }
@@ -36,6 +38,7 @@
 		public function setInstrument($x) { $this->instrument = $x; }
 		public function setLocation($x) { $this->location = $x; }
 		public function setOpen($x) { $this->open = $x; }
+		public function setTimeZone($x) { $this->timeZone = $x; }
 
 		public function getAppointmentID() { return $this->id; }
 		public function getMentorID() { return $this->mentorID; }
@@ -47,6 +50,7 @@
 		public function getInstrument() { return $this->instrument; }
 		public function getLocation() { return $this->location; }
 		public function getOpen() { return $this->open; }
+		public function getTimeZone() { return $this->timeZone; }
 	}
 
 ?>

@@ -4,22 +4,40 @@
 
 	if (!isset($_SESSION["user_id"]))
 		header("Location: index.php");
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST")
+	{
+		if (isset($_POST["submit"]) && $_POST["submit"] == "delete")
+		{
+			deleteAppointment($_POST["selectedAppt"]);
+		}
+		if (isset($_POST["submit"]) && $_POST["submit"] == "edit")
+		{
+			$_SESSION["appt"] = $_POST["selectedAppt"];
+			header("Location: editAppointment.php");
+		}
+
+	}
 	function displayAppointments($open, $caption, $student)
 	{
 		if ($student)
 			$appointments = getAppointmentsByStudentID($_SESSION["user_id"]);
 		else
 			$appointments = getAppointments($_SESSION["username"], $open);
-		echo '<table class="table table-hover">
+		echo '<form role="form" method="post">
+		<table class="table table-hover">
 		<caption>'.$caption.'</caption>
 			<thead>
 			<tr>';
 			if (!$open)
 				echo '<th>Student</th>';
+			else
+				echo '<th></th>';
 			echo '
 				<th>Date</th>
 				<th>Start Time</th>
 				<th>End Time</th>
+				<th>Time Zone</th>
 				<th>Instrument</th>
 				<th>Price</th>
 				<th>Location</th>
@@ -33,10 +51,13 @@
 				echo '<tr>';
 				if (!$open)
 					echo '<td><a href="userPage.php?user='.$a->getStudentUsername().'">'.$a->getStudentUsername().'</td>';
+				else
+					echo '<td><input type="radio" name="selectedAppt" value='.$a->getAppointmentID().'></td>';
 					echo '
 						<td>'.$a->getDate().'</td>
 						<td>'.$a->getStartTime().'</td>
 						<td>'.$a->getEndTime().'</td>
+						<td>'.$a->getTimeZone().'</td>
 						<td>'.$a->getInstrument().'</td>
 						<td>$'.number_format($a->getPrice(), 2, '.', ',').' USD</td>
 						<td>'.$a->getLocation().'</td>
@@ -45,13 +66,17 @@
 		}
 		else
 		{
-			if ($open)
-				echo '<tr><td colspan="6">No results to display</td></tr>';
-			else
-				echo '<tr><td colspan="7">No results to display</td></tr>';
+			echo '<tr><td colspan="7">No results to display</td></tr>';
 		}
 		echo '</tbody>
 			</table>';
+		if ($open)
+		{
+			echo '<button type="submit" class="button warning large expanded" name="submit" value="edit">Edit Appointment</button>';
+			echo '<button type="submit" class="button danger large expanded" name="submit" value="delete">Delete Appointment</button>';
+
+		}
+		echo '</form>';
 	}
 
 ?>
@@ -79,7 +104,7 @@
 				displayAppointments(0, "CLOSED APPOINTMENTS", false);
 				displayAppointments(1, "OPEN APPOINTMENTS", false);
 			}
-			displayAppointments(1, "MY APPOINTMENTS", true);
+			displayAppointments(0, "MY APPOINTMENTS", true);
 			?>
 		</div>
 	</div>

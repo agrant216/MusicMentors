@@ -42,7 +42,6 @@
 						echo '<h1>Hello, please <a href="login.php">log in</a> or <a href="register.php">register a new account!</a></h1>';
 					echo "<ul>";
 					$users = getUserNames();
-					echo print_r($_SESSION);
 					foreach ($users as $key => $value) {
 						echo '<li><a href="userPage.php?user='.$value["username"].'">'.$value["username"].'</a></li>';
 					}
