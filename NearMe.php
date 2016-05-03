@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,9 +17,11 @@
         height: 100%;
       }
     </style>
+    <link rel="stylesheet" href="assets/css/foundation.min.css">
     <script src="assets\js\vendor\jquery.js"></script>
   </head>
   <body>
+    <?php include("includes/mm_header.inc.php");?>
     <div id="map"></div>
     <script>
       // Note: This example requires that you consent to location sharing when
@@ -161,5 +165,11 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApgsOVdVnT6BvjyR_baJ4-70YRn6YrERU&callback=initMap">
     </script>
+    <?php include("includes/mm_footer.inc.php");?>
+  <script src="assets/js/vendor/jquery.js"></script>
+  <script src="assets/js/vendor/foundation.js"></script>
+  <script>
+    $(document).foundation();
+  </script>
   </body>
 </html>

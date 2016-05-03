@@ -1,8 +1,10 @@
+<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+
 <div class="top-bar">
 	<div class="row">
 		<div class="top-bar-left">
 			<ul class="dropdown menu" data-dropdown-menu>
-				<li class="menu-text">Music Mentors</li>
+				<li class="menu-text"><a href="index.php">Music Mentors</a></li>
 				<li class="has-submenu">
 					<a href="#">Account</a>
 					<ul class="submenu menu vertical" data-submenu>
@@ -20,6 +22,12 @@
 					</ul>
 				</li>
 				<li> <a href="search.php">Mentor Search</a> </li>
+				<li class="has-submenu">
+					<a href="#">Tools</a>
+					<ul class="submenu menu verticual" data-submenu>
+						<li><a href="NearMe.php">Find Lessons Near Me</a></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<div class="top-bar-right">
