@@ -195,7 +195,12 @@
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
-			addLocation($id, $values);
+<<<<<<< HEAD
+=======
+			if(($values["location"]!="Online")&&($values["location"]!="online")){
+				addLocation($id,$values);
+			}
+>>>>>>> 7891c48653b4b1dd0b25d82459b7ad015f1c1501
 		}
 
 		catch (PDOException $e) {
@@ -229,6 +234,7 @@ function addLocation($user_id,$values){
 	   		}
 
 	}
+
 	function deleteAppointment($id)
 	{
 		try
