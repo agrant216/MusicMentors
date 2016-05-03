@@ -23,10 +23,7 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Music Mentors</title>
-	<!-- Bootstrap core CSS  -->
-	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
 	<!-- Custom styles for this template -->
-    <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 	<link rel="stylesheet" href="assets/css/homeScreen.css">
@@ -48,38 +45,49 @@
 		    <h3 class="text">Welcome to Music Mentors, the #1 site in music networking!</h3>
 		  </div>
 	      <figcaption class="orbit-caption">Welcome to Music Mentors!</figcaption>
-	    </li><!-- 
-	    <li class="orbit-slide">
-	      <img class="orbit-image" src="http://placehold.it/1000x300/A92B48/fff" alt="Space">
-	      <figcaption class="orbit-caption">Lets Rocket!</figcaption>
 	    </li>
-	    <li class="orbit-slide">
-	      <img class="orbit-image" src="assets/img/orbit/03.jpg" alt="Space">
-	      <figcaption class="orbit-caption">Encapsulating</figcaption>
-	    </li>
-	  </ul>
-	  <nav class="orbit-bullets">
-	    <button class="is-active" data-slide="0"><span class="show-for-sr">First slide details.</span><span class="show-for-sr">Current Slide</span></button>
-	    <button data-slide="1"><span class="show-for-sr">Second slide details.</span></button>
-	    <button data-slide="2"><span class="show-for-sr">Third slide details.</span></button>
-	  </nav> -->
 	</div>
       
-	<div class="row">
-		<div class="medium-6 large-12 columns">
+	<div id="main" class="row">
+		<div class="medium-12 large-8 columns">
+		<h3>User Directory</h3>
+		<hr>
+			<table>
             	<?php
-					if (isset($_SESSION["username"]))
-						echo '<h1>Hello, '.$_SESSION["username"].'</h1>';
-					else
-						echo '<h1>Hello, please <a href="login.php">log in</a> or <a href="register.php">register a new account!</a></h1>';
-					echo "<ul>";
 					$users = getUserNames();
 					foreach ($users as $key => $value) {
-						echo '<li><a href="userPage.php?user='.$value["username"].'">'.$value["username"].'</a></li>';
+						echo '<tr><td><a href="userPage.php?user='.$value["username"].'">'.$value["username"].'</a></td></tr>';
 					}
 				?>
 
-			</ul>
+			</table>
+		</div>
+		<div class="medium-12 large-4 columns">
+			<h3>Upcoming Lessons</h3>
+			<hr>
+			<div class="row">
+			<?php //$appts = getAppointments($_SESSION["username"],1); echo appts;?>
+			  <div class="small-9 columns small-centered">
+			    <article class="event">
+
+			        <div class="event-date">
+			          <p class="event-month">Sept</p>
+			          <p class="event-day">18</p>
+			        </div>
+
+			        <div class="event-desc">
+			          <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
+			          <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Altlanta</p>
+			          <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+			        </div>
+
+			      </article>
+
+			      <hr>
+
+				  </div>
+				</div>
+      
 		</div>
 	</div>
 	<?php include("includes/mm_footer.inc.php");?>

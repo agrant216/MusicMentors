@@ -20,7 +20,7 @@
 			else
 				$sql = 'SELECT mm_appointments.id, date, mm_appointments.mentor_id, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 				INNER JOIN mm_instruments ON mm_appointments.instrument_id = mm_instruments.id
-				WHERE mm_appointments.mentor_id = (SELECT id FROM mm_users WHERE username = :name) AND open=:open';
+				WHERE mm_appointments.mentor_id = (SELECT id FROM mm_users WHERE username = :name) AND open=:open ORDER BY date ASC';
 
 			//PREPARE STATEMENTS
 			$statement = $pdo->prepare($sql);
