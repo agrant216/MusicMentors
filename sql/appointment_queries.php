@@ -194,7 +194,10 @@
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
-			addLocation($id, $values);
+			if (($values["location"]!="Online")&&($values["location"]!="online"))
+			{
+				addLocation($id, $values);
+			}
 		}
 
 		catch (PDOException $e) {
