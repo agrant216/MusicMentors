@@ -40,8 +40,8 @@
 	}
 	function displaySortOptions()
 	{
-		echo '	Sort By
-				<select class="form-control" name="sort_option">';
+		echo 'Sort By
+				<select name="sort_option">';
 		if ($_POST["sort_option"] == 1)
 			echo '<option value="1" selected>Username</option>';
 		else
@@ -115,12 +115,6 @@
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<title>Mentor Search</title>
-
-    	<!-- Bootstrap core CSS  -->
-    	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
-    	<!-- Custom styles for this template -->
-    	<link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
-
     	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!--[if lt IE 9]>
     	  <script src="../../assets/js/html5shiv.js"></script>
@@ -132,55 +126,48 @@
 
 	<body>
 	<?php include("includes/mm_header.inc.php"); ?>
-  		<div class="container">
-    		<div class="row">
-      			<div class="col-md-12">
-					<div class="panel panel-default">
-                		<div class="panel-heading"><h4>Mentor Search</h4></div>
-                		<div class="panel-heading">
-                		Search By
-							<form class="form-inline" role="search" method="post">
-								<div class="input-group">
-									<span class="input-group-btn">
-									<div class="col-md-3">
-										<select class="form-control" name="search_option_genre">
-											<?php displaySearchOptions("genre"); ?>
-										</select>
-									</div>
-									<div class="col-md-3">
-										<select class="form-control" name="search_option_instrument">
-											<?php displaySearchOptions("instrument"); ?>
-										</select>
-									</div>
-									<div class="col-md-9">
-										<label class="sr-only" for="search">Search</label>
-										<input type="text" class="form-control" placeholder="Search username" name="search_option_name">
-										<?php displaySortOptions(); ?>
-											<button class="btn btn-default" type="submit">Search</button>
-
-									</div>
-									</span>
-								</div>
-							</form>
-                		</div>
-                 		<table class="table">
-                 			<tr>
-                 				<th>Username</th>
-                 				<th>Genres</th>
-                 				<th>Instruments</th>
-                 			</tr>
-							<?php
-								sortUsers($users);
-								foreach($users as $u)
-								{
-									outputRow($u->getUsername(), $u->getGenres(), $u->getInstruments());
-								}
-							?>
-						</table>
-					</div> <!-- End of Panel -->
-				</div>	<!-- End of col-md-10 -->
-			</div> <!-- End of row -->
-		</div> <!-- End of Container -->
+		<div class="row">
+			<div class="medium-6 large-12 columns">
+				<div class="page-header">
+				   <h2>Mentor Search</h2>
+				</div>
+				Search By
+					<form role="search" method="post">
+							<div class="small-6 large-6 columns">
+								<select name="search_option_genre">
+									<?php displaySearchOptions("genre"); ?>
+								</select>
+								<select name="search_option_instrument">
+									<?php displaySearchOptions("instrument"); ?>
+								</select>
+								<input type="text" placeholder="Search username" name="search_option_name">
+							</div>
+							<div class="small-6 large-6 columns">
+								<?php displaySortOptions(); ?>
+							</div>
+							<div class= "medium-12 columns">
+									<button class="button primary expanded" type="submit">Search</button>
+							</div>
+					</form>
+				<div class="small-12">
+					<table class="table">
+						<tr>
+							<th>Username</th>
+							<th>Genres</th>
+							<th>Instruments</th>
+						</tr>
+						<?php
+							sortUsers($users);
+							foreach($users as $u)
+							{
+								outputRow($u->getUsername(), $u->getGenres(), $u->getInstruments());
+							}
+						?>
+					</table>
+				</div>
+				<!--</div>-->
+			</div> <!--End Columns-->
+		</div> <!--End Row-->
 		<?php include("includes/mm_footer.inc.php"); ?>
 	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="assets/js/vendor/foundation.js"></script>

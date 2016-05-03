@@ -67,6 +67,7 @@
 					<th>Date</th>
 					<th>Start Time</th>
 					<th>End Time</th>
+					<th>Time Zone</th>
 					<th>Instrument</th>
 					<th>Price</th>
 					<th>Location</th>
@@ -82,6 +83,7 @@
 							<td>'.$a->getDate().'</td>
 							<td>'.$a->getStartTime().'</td>
 							<td>'.$a->getEndTime().'</td>
+							<td>'.$a->getTimeZone().'</td>
 							<td>'.$a->getInstrument().'</td>
 							<td>$'.number_format($a->getPrice(), 2, '.', ',').' USD</td>
 							<td>'.$a->getLocation().'</td>
@@ -94,7 +96,7 @@
 			}
 			else
 			{
-				echo '<tr><td colspan="6">No results to display</td></tr></tbody></table>';
+				echo '<tr><td colspan="7">No results to display</td></tr></tbody></table>';
 			}
 			echo '</form>';
 		}

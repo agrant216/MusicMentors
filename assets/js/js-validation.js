@@ -1,7 +1,7 @@
 $.validate({
   form : '#registration',
   form : '#login',
-  modules:'html5, security'
+  modules:'html5, security, date'
 });
 
 $(document).ready(function(){

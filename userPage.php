@@ -33,10 +33,7 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Music Mentors</title>
-	<!-- Bootstrap core CSS  -->
-	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
-	<!-- Custom styles for this template -->
-    <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>

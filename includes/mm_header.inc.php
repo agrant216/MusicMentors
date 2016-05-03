@@ -27,13 +27,13 @@
 				<?php
 					if (isset($_SESSION["username"]))
 					{
-						echo '<li>Welcome, '.$_SESSION["username"].'&nbsp;</li>';
-						echo '<li><a href="logout.php" class="button">Log Out</a></li>';
+						echo '<li class="menu-text">Welcome, '.$_SESSION["username"].'&nbsp;</li>';
+						echo '<li><a href="logout.php" class="button secondary">Log Out</a></li>';
 					}
 					else
 					{
-						echo '<li>You are not logged in!&nbsp;</li>';
-						echo '<li><a href="login.php" class="button">Login/Register</a></li>';
+						echo '<li class="menu-text">You are not logged in!&nbsp;</li>';
+						echo '<li><a href="login.php" class="button secondary">Login/Register</a></li>';
 					}
 				?>
 			</ul>

@@ -9,16 +9,14 @@
 			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			//Prepare a statement by setting parameters
-			$sql = 'SELECT id, username, password, type FROM mm_users WHERE username=:username';
+			$sql = 'SELECT id, username, password, type, salt FROM mm_users WHERE username=:username';
 			$statement = $pdo->prepare($sql);
 			$statement->bindValue(':username', $username); //Bind value of sql statement with value of id in query string
 			$statement->execute();
 
 			while ($row = $statement->fetch())
 			{
-			    //PASSWORD HASHING DOESN'T WORK ON SCHOOL SERVER
-			    //if (password_verify($password, $row['password']))
-			    if ($password == $row['password'])
+			    if (hash_compare(hash("sha256", $password.$row["salt"]), $row["password"]))
 			    {
 					$id = $row["id"];
 					$type = $row["type"];
@@ -44,13 +42,14 @@
 			 $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 			 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			//Prepare a statement by setting parameters
-			 $sql = 'INSERT INTO mm_users (username, password, email, type) VALUES (:username, :password, :email, :type)';
+			 $sql = 'INSERT INTO mm_users (username, password, email, type, salt) VALUES (:username, :password, :email, :type, :salt)';
 			 $statement = $pdo->prepare($sql);
+
+			 $salt = base64_encode(mcrypt_create_iv(12, MCRYPT_DEV_URANDOM));
+			 $password = hash("sha256", $password.$salt);
+
 			 $statement->bindValue(':username', $username); //Bind value of sql statement with value of id in query string
-
-			 //PASSWORD HASHING DOESN'T WORK ON SCHOOL SERVER
-			 //$password = password_hash($password, PASSWORD_DEFAULT);
-
+			 $statement->bindValue(':salt', $salt);
 			 $statement->bindValue(':password', $password);
 			 $statement->bindValue(':email', $email);
 			 $statement->bindValue(':type', $type);
@@ -157,7 +156,7 @@
 	function addToken($name, $sess_id)
 	{
 		$id;
-		$hashed_sess = hash("sha256", hash("md5", hash("sha256", $sess_id)));
+		$hashed_sess = hash("sha256", hash("sha256",$sess_id).filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP));
 		try
 		{
 			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
@@ -193,7 +192,7 @@
 	}
 	function checkToken($sess_id)
 	{
-		$hashed_sess = hash("sha256", hash("md5", $sess_id));
+		$hashed_sess = hash("sha256",$sess_id.filter_var($_SERVER["REMOTE_ADDR"], FILTER_VALIDATE_IP));
 		try
 		{
 			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
@@ -220,7 +219,6 @@
 	}
 	function deleteToken($sess_id, $user_id)
 	{
-		//$hashed_sess = hash("sha256", hash("md5", hash("sha256", $sess_id)));
 		try
 		{
 			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
@@ -276,7 +274,7 @@
 				$sql = 'UPDATE mm_users SET username=:input WHERE id=:id';
 				break;
 			case 'password':
-				$sql = 'UPDATE mm_users SET password=:input WHERE id=:id';
+				$sql = 'UPDATE mm_users SET password=:input, salt=:salt WHERE id=:id';
 				break;
 			case 'email':
 				$sql = 'UPDATE mm_users SET email=:input WHERE id=:id';
@@ -290,9 +288,15 @@
 				$id = getUserId($user);
 				$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
 				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				//Prepare a statement by setting parameters
 
 				$statement = $pdo->prepare($sql);
+
+				if ($mode == "password")
+				{
+					 $salt = base64_encode(mcrypt_create_iv(12, MCRYPT_DEV_URANDOM));
+					 $input = hash("sha256", $input.$salt);
+					 $statement->bindValue(':salt', $salt);
+				}
 				$statement->bindValue(':input', $input);
 				$statement->bindValue(':id', $user);
 				$statement->execute();
@@ -309,4 +313,21 @@
 				return "An error occurred, please try again later.";
 			}
 	}
+
+    function hash_compare($a, $b) {
+        if (!is_string($a) || !is_string($b)) {
+            return false;
+        }
+
+        $len = strlen($a);
+        if ($len !== strlen($b)) {
+            return false;
+        }
+
+        $status = 0;
+        for ($i = 0; $i < $len; $i++) {
+            $status |= ord($a[$i]) ^ ord($b[$i]);
+        }
+        return $status === 0;
+    }
 ?>

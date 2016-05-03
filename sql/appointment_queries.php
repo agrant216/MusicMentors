@@ -1,7 +1,6 @@
 <?php
 	require_once("db_config.php");
 	require_once("./includes/Appointment.class.php");
-	require_once("user_queries.php");
 	date_default_timezone_set('UTC');
 
 	function getAppointments($name, $open)
@@ -96,7 +95,7 @@
 			//Prepare a statement by setting parameters
 
 			//SQL STATEMENTS
-			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open FROM mm_appointments
+			$sql = 'SELECT mm_appointments.id, mentor_id, date, start_time, end_time, mm_instruments.instrument, price, location, open, timezone FROM mm_appointments
 			INNER JOIN mm_instruments on mm_appointments.instrument_id = mm_instruments.id
 			WHERE mm_appointments.location = :location';
 
@@ -109,7 +108,7 @@
 			$statement->execute();
 			while ($row =  $statement->fetch())
 			{
-				$appts = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"]);
+				$appts = new Appointment($row["id"], $row["mentor_id"], null, $row["date"], $row["start_time"], $row["end_time"], $row["price"], $row["instrument"], $row["location"], $row["open"], $row["timezone"]);
 			}
 			$pdo = null;
 		}
@@ -195,12 +194,7 @@
 			$statement->execute();
 			$pdo = null;
 			$error="Success! Appointment added.";
-<<<<<<< HEAD
-=======
-			if(($values["location"]!="Online")&&($values["location"]!="online")){
-				addLocation($id,$values);
-			}
->>>>>>> 7891c48653b4b1dd0b25d82459b7ad015f1c1501
+			addLocation($id, $values);
 		}
 
 		catch (PDOException $e) {
@@ -234,7 +228,6 @@ function addLocation($user_id,$values){
 	   		}
 
 	}
-
 	function deleteAppointment($id)
 	{
 		try

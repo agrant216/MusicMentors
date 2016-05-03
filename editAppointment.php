@@ -86,7 +86,7 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Music Mentors</title>
-	<!-- Bootstrap core CSS  -->
+
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>

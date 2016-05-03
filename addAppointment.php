@@ -36,6 +36,7 @@
 		echo '<label for="timezone">Time Zone:</label>';
 		include("includes/timezone.php");
 		echo '<label for="price">Price (USD):</label>';
+		echo '<input type="number" name="price" min="1" step=".01" pattern="^-?\d+(\.\d{2})?$" required="required" data-validation-help="Enter the price of the lesson as a decimal value in United States Dollars (USD). Minimum of $1.00" data-validation-error-msg="The value must be a decimal with a minimum value of 1.00.">';
 		echo '<label for="option_instrument">Instrument:</label>';
 		echo '<select class="form-control" name="option_instrument">';
 		displaySearchOptions("instrument", $appt);
@@ -55,7 +56,7 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Music Mentors</title>
-	<!-- Bootstrap core CSS  -->
+
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>

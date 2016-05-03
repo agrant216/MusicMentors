@@ -1,4 +1,4 @@
-<div class="row column">
+<div class="row">
 	<hr>
 	<ul class="menu">
 		<li>Music Mentors</li>

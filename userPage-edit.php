@@ -29,18 +29,13 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Music Mentors</title>
-	<!-- Bootstrap core CSS  -->
-	<link href="bootstrap3_defaultTheme/dist/css/bootstrap.css" rel="stylesheet">
-	<!-- Custom styles for this template -->
-    <link href="bootstrap3_defaultTheme/theme.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
 </head>
 <body>
 	<?php include("includes/mm_header.inc.php"); ?>
-
 	<br>
-
 	<div class="row columns">
 		<nav aria-label="You are here:" role="navigation">
 			<ul class="breadcrumbs">
@@ -51,7 +46,7 @@
 			</ul>
 		</nav>
 	</div>
-		<div class="row">
+	<div class="row">
 		<div class="medium-6 large-4 columns">
 			<h2><?php echo $username; ?></h2>
 
@@ -79,7 +74,7 @@
 				<a class="button">Twitter</a>
 				<a class="button">LinkedIn</a>
 			</div>
-			<br><br><button class="button" type="submit">SAVE CHANGES</button>
+			<br><br><button class="large button" type="submit">SAVE CHANGES</button>
 		</div>
 		</form>
 	</div>
