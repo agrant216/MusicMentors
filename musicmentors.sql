@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2016 at 06:21 AM
+-- Generation Time: May 03, 2016 at 02:30 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -46,7 +46,7 @@ CREATE TABLE `mm_appointments` (
 
 INSERT INTO `mm_appointments` (`id`, `mentor_id`, `student_id`, `date`, `start_time`, `end_time`, `price`, `instrument_id`, `location`, `open`, `timezone`) VALUES
 (7, 1, NULL, '2016-05-28', '12:00:00', '13:00:00', 40, 1, 'New Philadelphia, OH, United States', 1, '(GMT-05:00) Eastern Time (US & Canada)'),
-(8, 1, NULL, '2016-05-20', '07:00:00', '08:00:00', 40, 1, 'New Philadelphia, OH, United States', 1, '(GMT-12:00) International Date Line West');
+(8, 1, NULL, '2016-05-20', '07:00:00', '08:00:00', 35, 1, 'New Philadelphia, OH, United States', 1, '(GMT-12:00) International Date Line West');
 
 -- --------------------------------------------------------
 
@@ -179,17 +179,18 @@ CREATE TABLE `mm_users` (
   `email` varchar(255) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `bio` text,
-  `profile_image_name` varchar(255) DEFAULT NULL
+  `profile_image_name` varchar(255) DEFAULT NULL,
+  `salt` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `mm_users`
 --
 
-INSERT INTO `mm_users` (`id`, `username`, `password`, `email`, `type`, `bio`, `profile_image_name`) VALUES
-(1, 'testmentor', 'password', 'testmentor@musicmentors.com', 1, 'I like to play classical and rock guitar and drums.\r\nRock on!', 'community_image_1418393964.png'),
-(2, 'drumguy20', 'password', 'drumguy20@musicmentor.com', 1, NULL, NULL),
-(3, 'znewman', 'password2', 'znewman@mm.com', 0, 'I like to play metal and classical!', 'maxresdefault.jpg');
+INSERT INTO `mm_users` (`id`, `username`, `password`, `email`, `type`, `bio`, `profile_image_name`, `salt`) VALUES
+(1, 'testmentor', '15b628194f386cd05d4f515773da949cf0a9b50b846d1f393ac589ff0748a755', 'testmentor@musicmentors.com', 1, 'I like to play classical and rock guitar and drums.\r\nRock on!', 'community_image_1418393964.png', 'qDWM5NadUpHhCvDu'),
+(2, 'drumguy20', '5958eeb76148a7fbbd62c0b23ee97d42e31b71e87d8e27da01aeb27843d97204', 'drumguy20@musicmentor.com', 1, NULL, NULL, 'QGa9Pj6/h4GJg6mJ'),
+(3, 'znewman', 'a280e47bad398944d71b55f056465f6483e12de80fe823974e4c304a302ca32d', 'znewman@mm.com', 0, 'I like to play metal and classical!', 'maxresdefault.jpg', 'hI+NfBe0dJgb+a41');
 
 -- --------------------------------------------------------
 
@@ -310,12 +311,12 @@ ALTER TABLE `mm_user_instruments`
 -- AUTO_INCREMENT for table `mm_appointments`
 --
 ALTER TABLE `mm_appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `mm_auth`
 --
 ALTER TABLE `mm_auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `mm_genres`
 --
@@ -345,7 +346,7 @@ ALTER TABLE `mm_reviews`
 -- AUTO_INCREMENT for table `mm_users`
 --
 ALTER TABLE `mm_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
