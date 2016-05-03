@@ -1,13 +1,13 @@
 <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 
-<div class="top-bar">
+<div class="top-bar" style="z-index: 50;">
 	<div class="row">
 		<div class="top-bar-left">
 			<ul class="dropdown menu" data-dropdown-menu>
 				<li class="menu-text"><a href="index.php">Music Mentors</a></li>
 				<li class="has-submenu">
 					<a href="#">Account</a>
-					<ul class="submenu menu vertical" data-submenu>
+					<ul class="submenu menu vertical" data-submenu style="z-index: 50;">
 						<li><a href=<?php if (isset($_SESSION["username"])) echo '"userPage.php?user='.$_SESSION["username"].'"'; else echo '"login.php"'; ?>" >View My Profile</a></li>
 						<li><a href="userPage-edit.php">Edit My Profile</a></li>
 						<li><a href="edit-info.php">Edit My Account Settings</a></li>
@@ -16,7 +16,7 @@
 				</li>
 				<li class="has-submenu">
 					<a href="#">Appointments</a>
-					<ul class="submenu menu verticual" data-submenu>
+					<ul class="submenu menu verticual" data-submenu style="z-index: 50;">
 						<li><a href="appointments.php">View My Appointments</a></li>
 						<?php if(isset($_SESSION["user_type"]) && $_SESSION["user_type"] == 1) echo '<li><a href="addAppointment.php">Add Appointment</a></li>';?>
 					</ul>
@@ -24,7 +24,7 @@
 				<li> <a href="search.php">Mentor Search</a> </li>
 				<li class="has-submenu">
 					<a href="#">Tools</a>
-					<ul class="submenu menu verticual" data-submenu>
+					<ul class="submenu menu verticual" data-submenu style="z-index: 50;">
 						<li><a href="NearMe.php">Find Lessons Near Me</a></li>
 					</ul>
 				</li>

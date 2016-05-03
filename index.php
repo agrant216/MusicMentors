@@ -49,7 +49,7 @@
 	</div>
       
 	<div id="main" class="row">
-		<div class="medium-12 large-8 columns">
+		<div class="medium-12 large-7 columns" id="users">
 		<h3>User Directory</h3>
 		<hr>
 			<table>
@@ -62,29 +62,31 @@
 
 			</table>
 		</div>
-		<div class="medium-12 large-4 columns">
+		<div class="medium-12 large-5 columns">
 			<h3>Upcoming Lessons</h3>
 			<hr>
 			<div class="row">
-			<?php //$appts = getAppointments($_SESSION["username"],1); echo appts;?>
-			  <div class="small-9 columns small-centered">
+			<?php $appts = getAppointments($_SESSION["username"],1); //echo print_r($appts);?>
+			  <div id="events" class="small-9 columns small-centered">
+			  <?php foreach ($appts as $key => $value){ $mentor = getUsername($value->getMentorID()); $date=$value->getDate();
+			  	echo '
 			    <article class="event">
 
 			        <div class="event-date">
-			          <p class="event-month">Sept</p>
-			          <p class="event-day">18</p>
+			          <p class="event-month">'.substr($date,5,2).'</p>
+			          <p class="event-day">'.substr($date,8,2).'</p>
 			        </div>
 
 			        <div class="event-desc">
-			          <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
-			          <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Altlanta</p>
-			          <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+			          <h4 class="event-desc-header">'.$value->getInstrument().' Lesson with '.$mentor.'</h4>
+			          <p class="event-desc-detail"><span class="event-desc-time">'.$value->getStartTime().' - '.$value->getEndTime().'</span></p>
+			          <p class="event-desc-detail">'.$value->getLocation().'</p>
 			        </div>
 
 			      </article>
 
 			      <hr>
-
+					';}?>
 				  </div>
 				</div>
       
