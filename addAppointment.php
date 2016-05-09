@@ -27,23 +27,23 @@
 	function displayForm()
 	{
 		echo '<form id="login" role="form" method="post">';
-		echo '<label for="date">Date:</label>';
+		echo '<div class="form-group"><label for="date">Date:</label>';
 		echo '<input type="date" name="date" min="'.date("Y-m-d").'" required="required" data-validation-help="This is the date of the appointment.It must be a valid date in the following format MM/DD/YYYY starting from '.date("m/d/Y").'" data-validation-error-msg="Must be a valid date in the following format MM/DD/YYYY starting from '.date("m/d/Y").'">';
-		echo '<label for="startTime">Start Time:</label>';
+		echo '</div><div class="form-group"><label for="startTime">Start Time:</label>';
 		echo '<input type="time" name="startTime" required="required" data-validation-help="This is time that the appointment will start. It must be a valid time in the following format HH:MM AM/PM using the 12 hour clock" data-validation-error-msg="Must be a valid time in the following format HH:MM AM/PM using the 12 hour clock">';
-		echo '<label for="endTime">End Time:</label>';
+		echo '</div><div class="form-group"><label for="endTime">End Time:</label>';
 		echo '<input type="time" name="endTime" required="required" data-validation-help="This is the time that the appointment will end. It must be a valid time in the following format HH:MM AM/PM using the 12 hour clock" data-validation-error-msg="Must be a valid time in the following format HH:MM AM/PM using the 12 hour clock">';
-		echo '<label for="timezone">Time Zone:</label>';
+		echo '</div><div class="form-group"><label for="timezone">Time Zone:</label>';
 		include("includes/timezone.php");
-		echo '<label for="price">Price (USD):</label>';
+		echo '</div><div class="form-group"><label for="price">Price (USD):</label>';
 		echo '<input type="number" name="price" min="1" step=".01" pattern="^-?\d+(\.\d{2})?$" required="required" data-validation-help="Enter the price of the lesson as a decimal value in United States Dollars (USD). Minimum of $1.00" data-validation-error-msg="The value must be a decimal with a minimum value of 1.00.">';
-		echo '<label for="option_instrument">Instrument:</label>';
+		echo '</div><div class="form-group"><label for="option_instrument">Instrument:</label>';
 		echo '<select class="form-control" name="option_instrument">';
 		displaySearchOptions("instrument", $appt);
 		echo '</select>';
-		echo '<label for="location">Location:</label>';
+		echo '</div><div class="form-group"><label for="location">Location:</label>';
 		echo '<input id="autocomplete" onFocus="geolocate()" type="text" name="location" placeholder="Enter Online for online lesson" required="required" data-validation-help="This is the location of the lesson. Enter Online for an online lesson." data-validation-error-msg="Enter a valid location or Online for an Online lesson">';
-		echo '<input type="hidden" id="lat" name="lat">
+		echo '</div><input type="hidden" id="lat" name="lat">
 			<input type="hidden"id="lng" name="lng">';
 		echo '<button class="button success large expanded" type="submit">Make Appointment</button>';
 		echo '</form>';
@@ -59,6 +59,7 @@
 
 	<link rel="stylesheet" href="assets/css/foundation.min.css">
 	<link rel="stylesheet" href="assets/css/userprofile.css">
+	<link rel="stylesheet" href="assets/js/vendor/form-validator/theme-default.min.css">
 </head>
 <body>
 	<?php include("includes/mm_header.inc.php");?>
