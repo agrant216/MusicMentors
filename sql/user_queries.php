@@ -153,6 +153,31 @@
 			die( $e->getMessage() );
 		}
 	}
+	function getUserRating($id)
+	{
+		$name;
+		try
+		{
+			$pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//Prepare a statement by setting parameters
+			$sql = 'SELECT AVG(rating) AS AverageRating FROM mm_reviews WHERE mentor_id=:id';
+			$statement = $pdo->prepare($sql);
+			$statement->bindValue(':id', $id);
+			$statement->execute();
+
+
+			while($result = $statement->fetch()){
+				$rating = $result["AverageRating"];
+			}
+			$pdo = null;
+			return $rating;
+		}
+
+		catch (PDOException $e) {
+			die( $e->getMessage() );
+		}
+	}
 	function addToken($name, $sess_id)
 	{
 		$id;

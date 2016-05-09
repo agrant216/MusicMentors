@@ -69,11 +69,6 @@
 				echo '<textarea name="biography" form="imageUpload" rows="4">'.$user->getBiography().'</textarea>';
 				echo '<h5 class="bg-primary">Email: '.$user->getEmail().'</h5>';
 			?>
-			<div class="small secondary expanded button-group">
-				<a class="button">Facebook</a>
-				<a class="button">Twitter</a>
-				<a class="button">LinkedIn</a>
-			</div>
 			<br><br><button class="large button" type="submit">SAVE CHANGES</button>
 		</div>
 		</form>
@@ -82,6 +77,7 @@
 	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="assets/js/vendor/foundation.js"></script>
 	<script src="assets/js/edit_profile.js"></script>
+	<script src="assets/js/userpage.js"></script>
 	<script>
 		$(document).foundation();
 	</script>

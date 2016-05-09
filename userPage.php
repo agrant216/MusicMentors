@@ -47,7 +47,7 @@
 			<ul class="breadcrumbs">
 				<li><a href="index.php">Home</a></li>
 				<li>
-					<span class="show-for-sr">Current: </span> <?php if (isset($_SESSION["username"])) echo $_SESSION["username"]; ?>
+					<span class="show-for-sr">Current: </span> <?php if (isset($username)) echo $username; ?>
 				</li>
 			</ul>
 		</nav>
@@ -55,7 +55,7 @@
 		<div class="row">
 		<div class="medium-6 large-4 columns">
 			<h2><?php echo $username; ?></h2>
-
+			<?php if($user->getType()==1){ echo '<span class="stars">'.getUserRating($user->getID()).'</span>';} ?>
 			<?php if ($user->getImageFileName()!== null) echo '<img class="thumbnail" id="uPicture" alt="profile image" src="profile_images/'.$user->getImageFileName().'">';
 			else echo '<img class="thumbnail" id="uPicture" alt="profile image" src="assets/images/default.png">'; ?>
 			<div>
@@ -73,11 +73,6 @@
 				if (!isset($_SESSION["user_id"]) || $user->getID() != $_SESSION["user_id"])
 					displayAppointments($user, 1); //Display only open appointments
 			?>
-			<div class="small secondary expanded button-group">
-				<a class="button">Facebook</a>
-				<a class="button">Twitter</a>
-				<a class="button">LinkedIn</a>
-			</div>
 		</div>
 	</div>
 	<div class="column row">
@@ -92,6 +87,7 @@
 <?php include("includes/mm_footer.inc.php"); ?>
 	<script src="assets/js/vendor/jquery.js"></script>
 	<script src="assets/js/vendor/foundation.js"></script>
+	<script src="assets/js/userpage.js"></script>
 	<script>
 		$(document).foundation();
 	</script>
